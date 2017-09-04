@@ -48,6 +48,14 @@ public class EnvironmentGraphics {
 		modelMatrix.addScale(xScale, yScale, 0.0f);
 		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
+	public static void setModelMatrixRotationX(float angle)  {
+		modelMatrix.addRotationX(angle);
+		modelMatrix.setShaderMatrix(modelMatrixLoc);
+	}
+	public static void setModelMatrixRotationY(float angle)  {
+		modelMatrix.addRotationY(angle);
+		modelMatrix.setShaderMatrix(modelMatrixLoc);
+	}
 	public static void setModelMatrixRotationZ(float angle)  {
 		modelMatrix.addRotationZ(angle);
 		modelMatrix.setShaderMatrix(modelMatrixLoc);

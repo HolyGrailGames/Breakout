@@ -13,12 +13,12 @@ public class Breakout extends ApplicationAdapter {
 	private int vertexShaderID;
 	private int fragmentShaderID;
 
-	private int positionLoc;
-
 	private float deltaTime;
 	
 	private Paddle paddle;
 	private Box[] walls = new Box[3];
+	
+	private float angle = 0.0f;
 
 	@Override
 	public void create() {
@@ -73,6 +73,8 @@ public class Breakout extends ApplicationAdapter {
 	private void update() {
 		deltaTime = Gdx.graphics.getDeltaTime();
 		
+		angle += 180.0 * deltaTime;
+		
 		int direction = getInput();
 		
 		paddle.update(deltaTime, direction);
@@ -85,11 +87,20 @@ public class Breakout extends ApplicationAdapter {
 	
 	private void display() {
 		clearScreen(Settings.LIGHT_YELLLOW);
-		
+				
 		for (Box b : walls) {
 			b.draw();
 		}
 		paddle.draw();
+		
+		EnvironmentGraphics.clearModelMatrix();
+		EnvironmentGraphics.setColor(Color.MAROON);
+		EnvironmentGraphics.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
+		EnvironmentGraphics.setModelMatrixScale(300, 50);
+		EnvironmentGraphics.setModelMatrixRotationX(angle);
+		EnvironmentGraphics.setModelMatrixRotationY(angle);
+		EnvironmentGraphics.setModelMatrixRotationZ(angle);
+		BoxGraphic.drawSolidBox();
 	}
 
 	@Override

@@ -20,7 +20,15 @@ public class Box {
 		EnvironmentGraphics.setColor(color);
 		EnvironmentGraphics.setModelMatrixTranslation(position.x, position.y);
 		EnvironmentGraphics.setModelMatrixScale(scale.x, scale.y);
-		//EnvironmentGraphics.setModelMatrixRotationZ(zRotation);
+		EnvironmentGraphics.setModelMatrixRotationZ(zRotation);
 		BoxGraphic.drawSolidBox();
+	}
+	
+	public void setAngle(float angle) {
+		this.zRotation = angle;
+	}
+	
+	public float getAngle() {
+		return this.zRotation;
 	}
 }

@@ -28,6 +28,30 @@ public class ModelMatrix extends Matrix {
 		matrix.put(10, Sz * matrix.get(10));
 	}
 	
+	public void addRotationX(float angle) {
+		float c = (float)Math.cos((double)angle * Math.PI / 180.0);
+		float s = (float)Math.sin((double)angle * Math.PI / 180.0);
+		
+		M2[0] = 1; M2[4] = 0; M2[8] = 0; M2[12] = 0;
+		M2[1] = 0; M2[5] = c; M2[9] = -s; M2[13] = 0;
+		M2[2] = 0; M2[6] = s; M2[10] = c; M2[14] = 0;
+		M2[3] = 0; M2[7] = 0; M2[11] = 0; M2[15] = 1;
+		
+		this.addTransformation(M2);
+	}
+	
+	public void addRotationY(float angle) {
+		float c = (float)Math.cos((double)angle * Math.PI / 180.0);
+		float s = (float)Math.sin((double)angle * Math.PI / 180.0);
+		
+		M2[0] = c; M2[4] = 0; M2[8] = s; M2[12] = 0;
+		M2[1] = 0; M2[5] = 1; M2[9] = 0; M2[13] = 0;
+		M2[2] = -s; M2[6] = 0; M2[10] = c; M2[14] = 0;
+		M2[3] = 0; M2[7] = 0; M2[11] = 0; M2[15] = 1;
+		
+		this.addTransformation(M2);
+	}
+	
 	public void addRotationZ(float angle) {
 		float c = (float)Math.cos((double)angle * Math.PI / 180.0);
 		float s = (float)Math.sin((double)angle * Math.PI / 180.0);

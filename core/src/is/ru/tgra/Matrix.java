@@ -51,10 +51,10 @@ public class Matrix {
 		float m9 = matrix.get(1)*M2[8] + matrix.get(5)*M2[9] + matrix.get(9)*M2[10] + matrix.get(13)*M2[11];
 		float m10 = matrix.get(2)*M2[8] + matrix.get(6)*M2[9] + matrix.get(10)*M2[10] + matrix.get(14)*M2[11];
 		float m11 = matrix.get(3)*M2[8] + matrix.get(7)*M2[9] + matrix.get(11)*M2[10] + matrix.get(15)*M2[11];
-		float m12 = matrix.get(0)*M2[12] + matrix.get(4)*M2[13] + matrix.get(8)*M2[14] + matrix.get(12)*M2[14];
-		float m13 = matrix.get(1)*M2[12] + matrix.get(5)*M2[13] + matrix.get(9)*M2[14] + matrix.get(13)*M2[14];
-		float m14 = matrix.get(2)*M2[12] + matrix.get(6)*M2[13] + matrix.get(10)*M2[14] + matrix.get(14)*M2[14];
-		float m15 = matrix.get(3)*M2[12] + matrix.get(7)*M2[13] + matrix.get(11)*M2[14] + matrix.get(15)*M2[14];
+		float m12 = matrix.get(0)*M2[12] + matrix.get(4)*M2[13] + matrix.get(8)*M2[14] + matrix.get(12)*M2[15];
+		float m13 = matrix.get(1)*M2[12] + matrix.get(5)*M2[13] + matrix.get(9)*M2[14] + matrix.get(13)*M2[15];
+		float m14 = matrix.get(2)*M2[12] + matrix.get(6)*M2[13] + matrix.get(10)*M2[14] + matrix.get(14)*M2[15];
+		float m15 = matrix.get(3)*M2[12] + matrix.get(7)*M2[13] + matrix.get(11)*M2[14] + matrix.get(15)*M2[15];
 		
 		matrix.put(0, m0);
 		matrix.put(1, m1);
