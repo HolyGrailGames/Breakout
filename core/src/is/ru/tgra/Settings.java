@@ -18,7 +18,7 @@ public class Settings {
 	public static final Color YELLOW = new Color(1.0f, 1.0f, 0.0f, 1.0f);
 	public static final Color LIGHT_YELLLOW = new Color(1.0f, 1.0f, 0.785f, 1.0f);
 	
-	public static final float WALL_THICKNESS = 32.0f;
+	public static final float WALL_THICKNESS = 16.0f;
 	
 	/**
 	 * Private constructor to prevent anyone from creating an instance of this class.

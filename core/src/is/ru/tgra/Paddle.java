@@ -21,6 +21,7 @@ public class Paddle {
 	}
 	
 	public void draw() {
+		EnvironmentGraphics.clearModelMatrix();
 		EnvironmentGraphics.setColor(color);
 		EnvironmentGraphics.setModelMatrixTranslation(position.x, position.y);
 		EnvironmentGraphics.setModelMatrixScale(scale.x, scale.y);

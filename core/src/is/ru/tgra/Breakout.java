@@ -48,26 +48,26 @@ public class Breakout extends ApplicationAdapter {
 	
 		Gdx.gl.glLinkProgram(renderingProgramID);
 
-		positionLoc = Gdx.gl.glGetAttribLocation(renderingProgramID, "a_position");
-		Gdx.gl.glEnableVertexAttribArray(positionLoc);
-
 		Gdx.gl.glUseProgram(renderingProgramID);
 
 		EnvironmentGraphics.create(renderingProgramID);
 		
 		EnvironmentGraphics.setWindow(0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight());
 
-		BoxGraphic.create(positionLoc);
-		CircleGraphic.create(positionLoc);
+		BoxGraphic.create();
+		CircleGraphic.create();
 		
 		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED);
 		
+		// Left wall
 		walls[0] = new Box(new Point2D(Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
-						   new Vector2D(32.0f, Settings.windowHeight), Settings.LIGHT_GREEN);
+						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
+		// Top wall
 		walls[1] = new Box(new Point2D(Settings.windowWidth/2, Settings.windowHeight-Settings.WALL_THICKNESS/2), 
-						   new Vector2D(Settings.windowWidth, Settings.WALL_THICKNESS), Settings.LIGHT_GREEN);
+						   new Vector2D(Settings.windowWidth, Settings.WALL_THICKNESS), 0.0f, Settings.LIGHT_GREEN);
+		// Right wall
 		walls[2] = new Box(new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
-						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), Settings.LIGHT_GREEN);
+						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
 	}
 
 	private void update() {
@@ -85,6 +85,7 @@ public class Breakout extends ApplicationAdapter {
 	
 	private void display() {
 		clearScreen(Settings.LIGHT_YELLLOW);
+		
 		for (Box b : walls) {
 			b.draw();
 		}

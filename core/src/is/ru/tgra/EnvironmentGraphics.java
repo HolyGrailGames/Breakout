@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.BufferUtils;
 
 public class EnvironmentGraphics {
-	public static FloatBuffer modelMatrix;
 	public static int modelMatrixLoc;
+	public static int positionLoc;
+	
 	private static FloatBuffer projectionMatrix;
 	private static int projectionMatrixLoc;
 	private static int colorLoc;
+	
+	private static ModelMatrix modelMatrix;
 	
 	/**
 	 * Private constructor to prevent anyone from creating an instance of this class.
@@ -24,54 +27,30 @@ public class EnvironmentGraphics {
 		projectionMatrixLoc	= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_projectionMatrix");
 		colorLoc = Gdx.gl.glGetUniformLocation(renderingProgramID, "u_color");
 		
-		float[] mm = new float[16];
-
-		mm[0] = 1.0f; mm[4] = 0.0f; mm[8] = 0.0f; mm[12] = 0.0f;
-		mm[1] = 0.0f; mm[5] = 1.0f; mm[9] = 0.0f; mm[13] = 0.0f;
-		mm[2] = 0.0f; mm[6] = 0.0f; mm[10] = 1.0f; mm[14] = 0.0f;
-		mm[3] = 0.0f; mm[7] = 0.0f; mm[11] = 0.0f; mm[15] = 1.0f;
-
-		modelMatrix = BufferUtils.newFloatBuffer(16);
-		modelMatrix.put(mm);
-		modelMatrix.rewind();
-
-		Gdx.gl.glUniformMatrix4fv(modelMatrixLoc, 1, false, modelMatrix);
+		positionLoc = Gdx.gl.glGetAttribLocation(renderingProgramID, "a_position");
+		Gdx.gl.glEnableVertexAttribArray(positionLoc);
+		
+		modelMatrix = new ModelMatrix();
 	}
 	
 	public static void clearModelMatrix()
 	{
-		modelMatrix.put(0, 1.0f);
-		modelMatrix.put(1, 0.0f);
-		modelMatrix.put(2, 0.0f);
-		modelMatrix.put(3, 0.0f);
-		modelMatrix.put(4, 0.0f);
-		modelMatrix.put(5, 1.0f);
-		modelMatrix.put(6, 0.0f);
-		modelMatrix.put(7, 0.0f);
-		modelMatrix.put(8, 0.0f);
-		modelMatrix.put(9, 0.0f);
-		modelMatrix.put(10, 1.0f);
-		modelMatrix.put(11, 0.0f);
-		modelMatrix.put(12, 0.0f);
-		modelMatrix.put(13, 0.0f);
-		modelMatrix.put(14, 0.0f);
-		modelMatrix.put(15, 1.0f);
-
-		Gdx.gl.glUniformMatrix4fv(modelMatrixLoc, 1, false, modelMatrix);
+		modelMatrix.loadIdentityMatrix();
+		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	public static void setModelMatrixTranslation(float xTranslate, float yTranslate)
 	{
-		modelMatrix.put(12, xTranslate);
-		modelMatrix.put(13, yTranslate);
-
-		Gdx.gl.glUniformMatrix4fv(modelMatrixLoc, 1, false, modelMatrix);
+		modelMatrix.addTranslation(xTranslate, yTranslate, 0.0f);
+		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	public static void setModelMatrixScale(float xScale, float yScale)
 	{
-		modelMatrix.put(0, xScale);
-		modelMatrix.put(5, yScale);
-
-		Gdx.gl.glUniformMatrix4fv(modelMatrixLoc, 1, false, modelMatrix);
+		modelMatrix.addScale(xScale, yScale, 0.0f);
+		modelMatrix.setShaderMatrix(modelMatrixLoc);
+	}
+	public static void setModelMatrixRotationZ(float angle)  {
+		modelMatrix.addRotationZ(angle);
+		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	
 	public static void setWindow(float left, float right, float bottom, float top) {

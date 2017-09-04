@@ -10,8 +10,8 @@ public class BoxGraphic {
 	private static FloatBuffer vertexBuffer;
 	private static int vertexPointer;
 	
-	public static void create(int vertexPointer) {
-		BoxGraphic.vertexPointer = vertexPointer;
+	public static void create() {
+		BoxGraphic.vertexPointer = EnvironmentGraphics.positionLoc;
 
 		float[] array = {-0.5f, -0.5f,
 						-0.5f, 0.5f,
