@@ -11,7 +11,7 @@ public class BoxGraphic {
 	private static int vertexPointer;
 	
 	public static void create() {
-		BoxGraphic.vertexPointer = EnvironmentGraphics.positionLoc;
+		BoxGraphic.vertexPointer = GraphicsEnvironment.positionLoc;
 
 		float[] array = {-0.5f, -0.5f,
 						-0.5f, 0.5f,

@@ -21,10 +21,10 @@ public class Paddle {
 	}
 	
 	public void draw() {
-		EnvironmentGraphics.clearModelMatrix();
-		EnvironmentGraphics.setColor(color);
-		EnvironmentGraphics.setModelMatrixTranslation(position.x, position.y);
-		EnvironmentGraphics.setModelMatrixScale(scale.x, scale.y);
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(color);
+		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
+		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
 		BoxGraphic.drawSolidBox();
 	}
 	

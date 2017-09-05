@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.BufferUtils;
 
-public class EnvironmentGraphics {
+public class GraphicsEnvironment {
 	public static int modelMatrixLoc;
 	public static int positionLoc;
 	
@@ -20,7 +20,7 @@ public class EnvironmentGraphics {
 	 * Private constructor to prevent anyone from creating an instance of this class.
 	 * This is done because the EnvironmentGraphics class is to be used as a static class.
 	 */
-	private EnvironmentGraphics() {}
+	private GraphicsEnvironment() {}
 	
 	public static void create(int renderingProgramID) {
 		modelMatrixLoc = Gdx.gl.glGetUniformLocation(renderingProgramID, "u_modelMatrix");

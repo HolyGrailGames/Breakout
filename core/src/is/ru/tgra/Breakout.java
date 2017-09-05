@@ -50,9 +50,9 @@ public class Breakout extends ApplicationAdapter {
 
 		Gdx.gl.glUseProgram(renderingProgramID);
 
-		EnvironmentGraphics.create(renderingProgramID);
+		GraphicsEnvironment.create(renderingProgramID);
 		
-		EnvironmentGraphics.setWindow(0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight());
+		GraphicsEnvironment.setWindow(0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight());
 
 		BoxGraphic.create();
 		CircleGraphic.create();
@@ -93,46 +93,47 @@ public class Breakout extends ApplicationAdapter {
 		}
 		paddle.draw();
 		
-		EnvironmentGraphics.clearModelMatrix();
-		EnvironmentGraphics.setColor(Color.MAROON);
-		EnvironmentGraphics.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//EnvironmentGraphics.setModelMatrixRotationX(angle);
-		//EnvironmentGraphics.setModelMatrixRotationY(angle);
-		EnvironmentGraphics.setModelMatrixRotationZ(angle);
-		EnvironmentGraphics.setModelMatrixScale(10, 300);
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(Color.MAROON);
+		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
+		//GraphicsEnvironment.setModelMatrixRotationX(angle);
+		//GraphicsEnvironment.setModelMatrixRotationY(angle);
+		GraphicsEnvironment.setModelMatrixRotationZ(angle);
+		GraphicsEnvironment.setModelMatrixScale(1, 300);
 		BoxGraphic.drawSolidBox();
 		
-		EnvironmentGraphics.clearModelMatrix();
-		EnvironmentGraphics.setColor(Color.MAROON);
-		EnvironmentGraphics.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//EnvironmentGraphics.setModelMatrixRotationX(angle);
-		//EnvironmentGraphics.setModelMatrixRotationY(angle);
-		EnvironmentGraphics.setModelMatrixRotationZ(angle);
-		EnvironmentGraphics.setModelMatrixScale(300, 10);
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(Color.MAROON);
+		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
+		//GraphicsEnvironment.setModelMatrixRotationX(angle);
+		//GraphicsEnvironment.setModelMatrixRotationY(angle);
+		GraphicsEnvironment.setModelMatrixRotationZ(angle);
+		GraphicsEnvironment.setModelMatrixScale(300, 1);
 		BoxGraphic.drawSolidBox();
 		
-		EnvironmentGraphics.clearModelMatrix();
-		EnvironmentGraphics.setColor(Color.MAROON);
-		EnvironmentGraphics.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//EnvironmentGraphics.setModelMatrixRotationX(angle);
-		//EnvironmentGraphics.setModelMatrixRotationY(angle);
-		EnvironmentGraphics.setModelMatrixRotationZ(angle+45);
-		EnvironmentGraphics.setModelMatrixScale(300, 10);
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(Color.MAROON);
+		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
+		//GraphicsEnvironment.setModelMatrixRotationX(angle+45);
+		//GraphicsEnvironment.setModelMatrixRotationY(angle+45);
+		GraphicsEnvironment.setModelMatrixRotationZ(angle+45);
+		GraphicsEnvironment.setModelMatrixScale(300, 1);
 		BoxGraphic.drawSolidBox();
 		
-		EnvironmentGraphics.clearModelMatrix();
-		EnvironmentGraphics.setColor(Color.MAROON);
-		EnvironmentGraphics.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//EnvironmentGraphics.setModelMatrixRotationX(angle);
-		//EnvironmentGraphics.setModelMatrixRotationY(angle);
-		EnvironmentGraphics.setModelMatrixRotationZ(angle-45);
-		EnvironmentGraphics.setModelMatrixScale(300, 10);
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(Color.MAROON);
+		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
+		//GraphicsEnvironment.setModelMatrixRotationX(angle-45);
+		//GraphicsEnvironment.setModelMatrixRotationY(angle-45);
+		GraphicsEnvironment.setModelMatrixRotationZ(angle-45);
+		GraphicsEnvironment.setModelMatrixScale(300, 1);
 		BoxGraphic.drawSolidBox();
 		
-		EnvironmentGraphics.clearModelMatrix();
-		EnvironmentGraphics.setColor(Color.MAROON);
-		EnvironmentGraphics.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		EnvironmentGraphics.setModelMatrixScale(150, 150);
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(Color.MAROON);
+		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
+		GraphicsEnvironment.setModelMatrixRotationZ(angle);
+		GraphicsEnvironment.setModelMatrixScale(150, 150);
 		CircleGraphic.drawOutlineCircle();
 	}
 

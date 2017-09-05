@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.BufferUtils;
 public class CircleGraphic {
 	private static FloatBuffer vertexBuffer;
 	private static int vertexPointer;
-	private static int verticesPerCircle = 32;
+	private static int verticesPerCircle = 64;
 	
 	public static void create() {
-		CircleGraphic.vertexPointer = EnvironmentGraphics.positionLoc;
+		CircleGraphic.vertexPointer = GraphicsEnvironment.positionLoc;
 		
 		vertexBuffer = BufferUtils.newFloatBuffer(2*verticesPerCircle);
 		double f = 0.0f;

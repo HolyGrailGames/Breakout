@@ -16,11 +16,11 @@ public class Box {
 	}
 	
 	public void draw() {
-		EnvironmentGraphics.clearModelMatrix();
-		EnvironmentGraphics.setColor(color);
-		EnvironmentGraphics.setModelMatrixTranslation(position.x, position.y);
-		EnvironmentGraphics.setModelMatrixScale(scale.x, scale.y);
-		EnvironmentGraphics.setModelMatrixRotationZ(zRotation);
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(color);
+		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
+		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
+		GraphicsEnvironment.setModelMatrixRotationZ(zRotation);
 		BoxGraphic.drawSolidBox();
 	}
 	
