@@ -123,7 +123,6 @@ public class Breakout extends ApplicationAdapter {
 			
 			for (Block block : blocks) {
 				if (block.pointIsInside(mouseX, mouseY)) {
-					System.out.println("hehe");
 					block.explode();
 				}	
 			}
@@ -143,18 +142,20 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	private void setupLevelOne() {
-		Point2D origin = new Point2D(Settings.LEVEL1_ORIGIN_X, Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y);
+		
+		float originX = Settings.LEVEL1_ORIGIN_X;
+		float originY = Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y;
 		Block block;
 		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
 			for(int j = 0; j < Settings.LEVEL1_ROWS; j++) {
 				// Spawn new block, then lower the point of origin to the next row
-				block = new Block(origin, new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 3);
+				block = new Block(new Point2D(originX, originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 3);
 				blocks.add(block);
-				origin.y -= Settings.ROW_SPACE;
+				originY -= Settings.ROW_SPACE;
 			}
 			// Set origin to the next column and reset the height
-			origin.x += Settings.COLUMN_SPACE;
-			origin.y = Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y;
+			originX += Settings.COLUMN_SPACE;
+			originY = Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y;
 		}
 	}
 }

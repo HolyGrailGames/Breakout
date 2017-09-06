@@ -41,6 +41,11 @@ public class Block {
 	}
 	
 	public boolean pointIsInside(float mouseX, float mouseY) {
+		/*System.out.println("-----------------------------------");
+		System.out.println("(" + mouseX + ", " + mouseY + ")");
+		System.out.println("(" + (position.x-scale.x/2) + ", " + (position.y-scale.y/2) + ", " +  
+							(position.x+scale.x/2) + ", " + (position.y+scale.y/2) + ")");*/
+		
 		if (exploding) {
 			return false;
 		}
@@ -55,12 +60,12 @@ public class Block {
 	public void explode() {
 		for (Box box : subBoxes) {
 			box.setMoving(true);
+			box.setColor(Color.FIREBRICK);
 		}
 	}
 	
 	private void initializeSubBoxes() {
 		subBoxes = subdivide(subdivisions, Settings.HORIZONTAL, position.x, position.y, scale.x, scale.y);
-		System.out.println(subBoxes.size());
 	}
 	
 	private ArrayList<Box> subdivide(int numDivisionsLeft, String direction, float Px, float Py, float Sx, float Sy) {

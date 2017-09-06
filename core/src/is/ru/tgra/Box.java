@@ -55,6 +55,10 @@ public class Box {
 	public void setMoving(boolean moving) {
 		this.moving = moving;
 	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
 		
 	public void setAngle(float angle) {
 		this.zRotation = angle;
