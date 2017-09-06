@@ -1,9 +1,15 @@
-package is.ru.tgra;
+package is.ru.tgra.objects;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
+
+import is.ru.tgra.shapes.Box;
+import is.ru.tgra.utils.Point2D;
+import is.ru.tgra.utils.Settings;
+import is.ru.tgra.utils.Utils;
+import is.ru.tgra.utils.Vector2D;
 
 public class Block {
 	private Point2D position;

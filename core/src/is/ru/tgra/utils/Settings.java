@@ -1,4 +1,4 @@
-package is.ru.tgra;
+package is.ru.tgra.utils;
 
 import com.badlogic.gdx.graphics.Color;
 

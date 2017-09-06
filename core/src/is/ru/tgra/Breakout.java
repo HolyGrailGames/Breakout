@@ -9,6 +9,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
+import is.ru.tgra.graphics.GraphicsEnvironment;
+import is.ru.tgra.objects.Block;
+import is.ru.tgra.objects.Paddle;
+import is.ru.tgra.shapes.Box;
+import is.ru.tgra.shapes.BoxGraphic;
+import is.ru.tgra.shapes.CircleGraphic;
+import is.ru.tgra.utils.Point2D;
+import is.ru.tgra.utils.Settings;
+import is.ru.tgra.utils.Vector2D;
+
 
 public class Breakout extends ApplicationAdapter {
 	

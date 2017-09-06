@@ -1,10 +1,12 @@
-package is.ru.tgra;
+package is.ru.tgra.shapes;
 
 import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.BufferUtils;
+
+import is.ru.tgra.graphics.GraphicsEnvironment;
 
 public class BoxGraphic {
 	private static FloatBuffer vertexBuffer;
