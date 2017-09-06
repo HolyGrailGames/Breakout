@@ -1,5 +1,6 @@
 package is.ru.tgra;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
 public class Settings {
@@ -19,6 +20,10 @@ public class Settings {
 	public static final Color LIGHT_YELLLOW = new Color(1.0f, 1.0f, 0.785f, 1.0f);
 	
 	public static final float WALL_THICKNESS = 16.0f;
+	public static final float BLOCK_WIDTH = 60.0f;
+	public static final float BLOCK_HEIGHT = 24.0f;
+	public static final float ROW_SPACE = 30.0f;
+	public static final float COLUMN_SPACE = 66.0f;
 	
 	public static final String LEFT = "LEFT";
 	public static final String RIGHT = "RIGHT";
@@ -28,6 +33,11 @@ public class Settings {
 	public static final String HORIZONTAL = "HORIZONTAL";
 	public static final String VERTICAL = "VERTICAL";
 	
+	
+	public static final float LEVEL1_ORIGIN_X = 99.0f;
+	public static final float LEVEL1_ORIGIN_Y = 66.0f;
+	public static final int LEVEL1_ROWS = 8;
+	public static final int LEVEL1_COLS = 10;
 	
 	/**
 	 * Private constructor to prevent anyone from creating an instance of this class.

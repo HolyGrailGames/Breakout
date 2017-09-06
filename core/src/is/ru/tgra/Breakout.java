@@ -1,5 +1,8 @@
 package is.ru.tgra;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,7 +20,7 @@ public class Breakout extends ApplicationAdapter {
 	
 	private Paddle paddle;
 	private Box[] walls = new Box[3];
-	private Block block;
+	private List<Block> blocks = new ArrayList<Block>();
 	
 	private float mouseX;
 	private float mouseY;
@@ -71,7 +74,7 @@ public class Breakout extends ApplicationAdapter {
 		walls[2] = new Box(new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
 						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
 		
-		block = new Block(new Point2D(Settings.windowWidth/2, Settings.windowHeight/2), new Vector2D(200, 100), Color.GOLDENROD, 8);
+		setupLevelOne();
 	}
 
 	private void update() {
@@ -80,7 +83,10 @@ public class Breakout extends ApplicationAdapter {
 		processInput();
 		
 		paddle.update(deltaTime);
-		block.update(deltaTime);
+		
+		for (Block block : blocks) {
+			block.update(deltaTime);	
+		}
 	}
 	
 	private void clearScreen(Color color) {
@@ -95,7 +101,10 @@ public class Breakout extends ApplicationAdapter {
 			b.draw();
 		}
 		paddle.draw();
-		block.draw();
+		
+		for (Block block : blocks) {
+			block.draw();	
+		}
 	}
 
 	@Override
@@ -112,8 +121,11 @@ public class Breakout extends ApplicationAdapter {
 			mouseX = Gdx.input.getX();
 			mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 			
-			if (block.pointIsInside(mouseX, mouseY)) {
-				block.explode();
+			for (Block block : blocks) {
+				if (block.pointIsInside(mouseX, mouseY)) {
+					System.out.println("hehe");
+					block.explode();
+				}	
 			}
 		}
 		
@@ -128,5 +140,21 @@ public class Breakout extends ApplicationAdapter {
 		}
 		paddle.setDirection(Settings.LEFT, moveLeft);
 		paddle.setDirection(Settings.RIGHT, moveRight);
+	}
+	
+	private void setupLevelOne() {
+		Point2D origin = new Point2D(Settings.LEVEL1_ORIGIN_X, Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y);
+		Block block;
+		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
+			for(int j = 0; j < Settings.LEVEL1_ROWS; j++) {
+				// Spawn new block, then lower the point of origin to the next row
+				block = new Block(origin, new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 3);
+				blocks.add(block);
+				origin.y -= Settings.ROW_SPACE;
+			}
+			// Set origin to the next column and reset the height
+			origin.x += Settings.COLUMN_SPACE;
+			origin.y = Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y;
+		}
 	}
 }
