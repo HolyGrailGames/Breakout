@@ -10,7 +10,7 @@ public class Box {
 	protected float zRotation;
 	protected Color color;
 	private boolean moving = false;
-	private Vector2D direction;
+	private Vector2D velocity;
 	private Random random = new Random();
 	private float speed = 50.0f;
 	
@@ -20,7 +20,7 @@ public class Box {
 		this.zRotation = zRotation;
 		this.color = color;
 		
-		this.direction = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 2 - 1);
+		this.velocity = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 2 -1);
 	}
 	
 	public Box(Point2D position, Vector2D scale, Color color) {
@@ -29,12 +29,17 @@ public class Box {
 		this.zRotation = 0;
 		this.color = color;
 		
-		this.direction = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 2 - 1);
+		this.velocity = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 4);
 	}
 	
 	public void update(float deltaTime) {
 		if (moving) {
-			translate(this.direction.x*deltaTime*speed, this.direction.y*deltaTime*speed);
+			velocity.y += Settings.GRAVITY * deltaTime;
+			translate(this.velocity.x*deltaTime*speed, this.velocity.y*deltaTime*speed);
+			if (position.y + scale.y/2 < 0) {
+				position.y = scale.y/2;
+				moving = false;
+			}
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package is.ru.tgra;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -11,6 +12,7 @@ public class Block {
 	private ArrayList<Box> subBoxes;
 	private int subdivisions;
 	private boolean exploding = false;
+	private Random random = new Random();
 	
 	/**
 	 * Constructor.
@@ -41,11 +43,6 @@ public class Block {
 	}
 	
 	public boolean pointIsInside(float mouseX, float mouseY) {
-		/*System.out.println("-----------------------------------");
-		System.out.println("(" + mouseX + ", " + mouseY + ")");
-		System.out.println("(" + (position.x-scale.x/2) + ", " + (position.y-scale.y/2) + ", " +  
-							(position.x+scale.x/2) + ", " + (position.y+scale.y/2) + ")");*/
-		
 		if (exploding) {
 			return false;
 		}
@@ -60,7 +57,7 @@ public class Block {
 	public void explode() {
 		for (Box box : subBoxes) {
 			box.setMoving(true);
-			box.setColor(Color.FIREBRICK);
+			box.setColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1.0f));
 		}
 	}
 	

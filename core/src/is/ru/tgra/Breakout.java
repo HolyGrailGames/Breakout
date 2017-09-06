@@ -149,7 +149,7 @@ public class Breakout extends ApplicationAdapter {
 		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
 			for(int j = 0; j < Settings.LEVEL1_ROWS; j++) {
 				// Spawn new block, then lower the point of origin to the next row
-				block = new Block(new Point2D(originX, originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 3);
+				block = new Block(new Point2D(originX, originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 5);
 				blocks.add(block);
 				originY -= Settings.ROW_SPACE;
 			}

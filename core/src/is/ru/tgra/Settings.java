@@ -1,12 +1,13 @@
 package is.ru.tgra;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
 public class Settings {
 	
 	public static float windowHeight;
 	public static float windowWidth;
+	
+	public static final float GRAVITY = -7.5f;
 	
 	public static final Color BLACK = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 	public static final Color LIGHT_GRAY = new Color(0.83f, 0.83f, 0.83f, 1.0f);
