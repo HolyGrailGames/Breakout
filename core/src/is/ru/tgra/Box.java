@@ -13,6 +13,7 @@ public class Box {
 	private Vector2D velocity;
 	private Random random = new Random();
 	private float speed = 50.0f;
+	private float rotationPerSecond;
 	
 	public Box(Point2D position, Vector2D scale, float zRotation, Color color) {
 		this.position = position;
@@ -21,6 +22,7 @@ public class Box {
 		this.color = color;
 		
 		this.velocity = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 2 -1);
+		this.rotationPerSecond = random.nextFloat() * 360 - 180;
 	}
 	
 	public Box(Point2D position, Vector2D scale, Color color) {
@@ -30,10 +32,12 @@ public class Box {
 		this.color = color;
 		
 		this.velocity = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 4);
+		this.rotationPerSecond = random.nextFloat() * 360 - 180;
 	}
 	
 	public void update(float deltaTime) {
 		if (moving) {
+			zRotation += rotationPerSecond * deltaTime;
 			velocity.y += Settings.GRAVITY * deltaTime;
 			translate(this.velocity.x*deltaTime*speed, this.velocity.y*deltaTime*speed);
 			if (position.y + scale.y/2 < 0) {
@@ -47,8 +51,8 @@ public class Box {
 		GraphicsEnvironment.clearModelMatrix();
 		GraphicsEnvironment.setColor(color);
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
-		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
 		GraphicsEnvironment.setModelMatrixRotationZ(zRotation);
+		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
 		BoxGraphic.drawSolidBox();
 	}
 	
