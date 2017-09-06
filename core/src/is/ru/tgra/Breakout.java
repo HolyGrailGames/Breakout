@@ -17,8 +17,10 @@ public class Breakout extends ApplicationAdapter {
 	
 	private Paddle paddle;
 	private Box[] walls = new Box[3];
+	private Block block;
 	
-	private float angle = 0.0f;
+	private float mouseX;
+	private float mouseY;
 
 	@Override
 	public void create() {
@@ -68,16 +70,17 @@ public class Breakout extends ApplicationAdapter {
 		// Right wall
 		walls[2] = new Box(new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
 						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
+		
+		block = new Block(new Point2D(Settings.windowWidth/2, Settings.windowHeight/2), new Vector2D(200, 100), Color.GOLDENROD, 8);
 	}
 
 	private void update() {
 		deltaTime = Gdx.graphics.getDeltaTime();
 		
-		angle += 90.0 * deltaTime;
+		processInput();
 		
-		int direction = getInput();
-		
-		paddle.update(deltaTime, direction);
+		paddle.update(deltaTime);
+		block.update(deltaTime);
 	}
 	
 	private void clearScreen(Color color) {
@@ -92,49 +95,7 @@ public class Breakout extends ApplicationAdapter {
 			b.draw();
 		}
 		paddle.draw();
-		
-		GraphicsEnvironment.clearModelMatrix();
-		GraphicsEnvironment.setColor(Color.MAROON);
-		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//GraphicsEnvironment.setModelMatrixRotationX(angle);
-		//GraphicsEnvironment.setModelMatrixRotationY(angle);
-		GraphicsEnvironment.setModelMatrixRotationZ(angle);
-		GraphicsEnvironment.setModelMatrixScale(1, 300);
-		BoxGraphic.drawSolidBox();
-		
-		GraphicsEnvironment.clearModelMatrix();
-		GraphicsEnvironment.setColor(Color.MAROON);
-		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//GraphicsEnvironment.setModelMatrixRotationX(angle);
-		//GraphicsEnvironment.setModelMatrixRotationY(angle);
-		GraphicsEnvironment.setModelMatrixRotationZ(angle);
-		GraphicsEnvironment.setModelMatrixScale(300, 1);
-		BoxGraphic.drawSolidBox();
-		
-		GraphicsEnvironment.clearModelMatrix();
-		GraphicsEnvironment.setColor(Color.MAROON);
-		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//GraphicsEnvironment.setModelMatrixRotationX(angle+45);
-		//GraphicsEnvironment.setModelMatrixRotationY(angle+45);
-		GraphicsEnvironment.setModelMatrixRotationZ(angle+45);
-		GraphicsEnvironment.setModelMatrixScale(300, 1);
-		BoxGraphic.drawSolidBox();
-		
-		GraphicsEnvironment.clearModelMatrix();
-		GraphicsEnvironment.setColor(Color.MAROON);
-		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		//GraphicsEnvironment.setModelMatrixRotationX(angle-45);
-		//GraphicsEnvironment.setModelMatrixRotationY(angle-45);
-		GraphicsEnvironment.setModelMatrixRotationZ(angle-45);
-		GraphicsEnvironment.setModelMatrixScale(300, 1);
-		BoxGraphic.drawSolidBox();
-		
-		GraphicsEnvironment.clearModelMatrix();
-		GraphicsEnvironment.setColor(Color.MAROON);
-		GraphicsEnvironment.setModelMatrixTranslation(Settings.windowWidth/2, Settings.windowHeight/2);
-		GraphicsEnvironment.setModelMatrixRotationZ(angle);
-		GraphicsEnvironment.setModelMatrixScale(150, 150);
-		CircleGraphic.drawOutlineCircle();
+		block.draw();
 	}
 
 	@Override
@@ -143,24 +104,29 @@ public class Breakout extends ApplicationAdapter {
 		display();
 	}
 	
-	private int getInput() {
-		/*
+	private void processInput() {
+		
 		if(Gdx.input.justTouched())
 		{
 			//do mouse/touch input stuff
-			position_x = Gdx.input.getX();
-			position_y = Gdx.graphics.getHeight() - Gdx.input.getY();
-		}*/
+			mouseX = Gdx.input.getX();
+			mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+			
+			if (block.pointIsInside(mouseX, mouseY)) {
+				block.explode();
+			}
+		}
 		
+		boolean moveLeft = false;
+		boolean moveRight = false;
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			return -1;
+			moveLeft = true;
 		}
-		else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			return 1;
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			moveRight = true;
 		}
-		else {
-			return 0;
-		}
+		paddle.setDirection(Settings.LEFT, moveLeft);
+		paddle.setDirection(Settings.RIGHT, moveRight);
 	}
 }

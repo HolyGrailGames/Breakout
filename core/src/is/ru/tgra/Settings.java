@@ -20,6 +20,15 @@ public class Settings {
 	
 	public static final float WALL_THICKNESS = 16.0f;
 	
+	public static final String LEFT = "LEFT";
+	public static final String RIGHT = "RIGHT";
+	public static final String UP = "UP";
+	public static final String DOWN = "DOWN";
+	
+	public static final String HORIZONTAL = "HORIZONTAL";
+	public static final String VERTICAL = "VERTICAL";
+	
+	
 	/**
 	 * Private constructor to prevent anyone from creating an instance of this class.
 	 * This is done because the Settings class is to be used as a static class.

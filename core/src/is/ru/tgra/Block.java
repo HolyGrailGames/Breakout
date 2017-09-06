@@ -1,0 +1,88 @@
+package is.ru.tgra;
+
+import java.util.ArrayList;
+
+import com.badlogic.gdx.graphics.Color;
+
+public class Block {
+	private Point2D position;
+	private Vector2D scale;
+	private Color color;
+	private ArrayList<Box> subBoxes;
+	private int subdivisions;
+	private boolean exploding = false;
+	
+	/**
+	 * Constructor.
+	 * @param position Global position.
+	 * @param scale Global scale.
+	 * @param color Color of Block.
+	 * @param subdivisions How many times to subdivide the Block into smaller blocks.
+	 * 					   Minimum = 0, Maximum = 8. Will be clamped between those values.
+	 */
+	public Block(Point2D position, Vector2D scale, Color color, int subdivisions) {
+		this.position = position;
+		this.scale = scale;
+		this.color = color;
+		this.subdivisions = (int)Utils.Clamp(subdivisions, 0, 8);
+		initializeSubBoxes();
+	}
+	
+	public void update(float deltaTime) {
+		for (Box box : subBoxes) {
+			box.update(deltaTime);
+		}
+	}
+	
+	public void draw() {
+		for (Box box : subBoxes) {
+			box.draw();
+		}
+	}
+	
+	public boolean pointIsInside(float mouseX, float mouseY) {
+		if (exploding) {
+			return false;
+		}
+		if (mouseX <= position.x+scale.x/2 && mouseX >= position.x-scale.x/2 &&
+			mouseY <= position.y+scale.y/2 && mouseY >= position.y-scale.y/2) {
+			exploding = true;
+			return true;
+		}
+		return false;
+	}
+	
+	public void explode() {
+		for (Box box : subBoxes) {
+			box.setMoving(true);
+		}
+	}
+	
+	private void initializeSubBoxes() {
+		subBoxes = subdivide(subdivisions, Settings.HORIZONTAL, position.x, position.y, scale.x, scale.y);
+		System.out.println(subBoxes.size());
+	}
+	
+	private ArrayList<Box> subdivide(int numDivisionsLeft, String direction, float Px, float Py, float Sx, float Sy) {
+		if (numDivisionsLeft == 0) {
+			ArrayList<Box> list =  new ArrayList<Box>();
+			list.add(new Box(new Point2D(Px, Py), new Vector2D(Sx, Sy), color));
+			return list;
+		}
+		else if (direction == Settings.HORIZONTAL) {					
+				ArrayList<Box> list = new ArrayList<Box>(
+						subdivide(numDivisionsLeft-1, Settings.VERTICAL, Px-Sx/4, Py, Sx/2, Sy));
+				list.addAll(
+						subdivide(numDivisionsLeft-1, Settings.VERTICAL, Px+Sx/4, Py, Sx/2, Sy));
+				return list;
+		}
+		else { 
+			ArrayList<Box> list = new ArrayList<Box>(
+					subdivide(numDivisionsLeft-1, Settings.HORIZONTAL, Px, Py-Sy/4, Sx, Sy/2));
+			
+			list.addAll(
+					subdivide(numDivisionsLeft-1, Settings.HORIZONTAL, Px, Py+Sy/4, Sx, Sy/2));
+			return list;
+		}
+	}
+}

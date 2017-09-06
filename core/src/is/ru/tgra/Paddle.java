@@ -2,30 +2,38 @@ package is.ru.tgra;
 
 import com.badlogic.gdx.graphics.Color;
 
-public class Paddle {
-	private Point2D position;
-	private Vector2D scale;
-	private Color color;
+public class Paddle extends Box {
 	private float speed = 500;
+	private boolean movingLeft = false;
+	private boolean movingRight = false;
 	
 	public Paddle(Point2D position, Vector2D scale, Color color) {
-		this.position = position;
-		this.scale = scale;
-		this.color = color;
+		super(position, scale, 0.0f, color);
 	}
 	
-	public void update(float deltaTime, int direction) {
-		position.x += speed * direction * deltaTime;
+	public void update(float deltaTime) {
+		// Early out if we are trying to move in both directions, so we don't move at all.
+		if (movingLeft && movingRight) {
+			return;
+		}
+		
+		if (movingLeft) {
+			position.x += speed * -1 * deltaTime;			
+		}
+		if (movingRight) {
+			position.x += speed * deltaTime;
+		}
 		
 		restrain();
 	}
 	
-	public void draw() {
-		GraphicsEnvironment.clearModelMatrix();
-		GraphicsEnvironment.setColor(color);
-		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
-		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
-		BoxGraphic.drawSolidBox();
+	public void setDirection(String direction, boolean flag) {
+		if (direction == Settings.LEFT) {
+			movingLeft = flag;
+		}
+		else if (direction == Settings.RIGHT) {
+			movingRight = flag;
+		}
 	}
 	
 	private void restrain() {
