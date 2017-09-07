@@ -1,4 +1,4 @@
-package is.ru.tgra;
+package is.ru.tgra.utils;
 
 public class Vector2D {
 	public float x;

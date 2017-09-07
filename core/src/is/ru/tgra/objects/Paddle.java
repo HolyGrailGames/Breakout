@@ -1,6 +1,11 @@
-package is.ru.tgra;
+package is.ru.tgra.objects;
 
 import com.badlogic.gdx.graphics.Color;
+
+import is.ru.tgra.shapes.Box;
+import is.ru.tgra.utils.Point2D;
+import is.ru.tgra.utils.Settings;
+import is.ru.tgra.utils.Vector2D;
 
 public class Paddle extends Box {
 	private float speed = 500;
@@ -11,6 +16,7 @@ public class Paddle extends Box {
 		super(position, scale, 0.0f, color);
 	}
 	
+	@Override
 	public void update(float deltaTime) {
 		// Early out if we are trying to move in both directions, so we don't move at all.
 		if (movingLeft && movingRight) {

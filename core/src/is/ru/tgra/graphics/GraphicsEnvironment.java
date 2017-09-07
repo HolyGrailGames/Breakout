@@ -1,4 +1,4 @@
-package is.ru.tgra;
+package is.ru.tgra.graphics;
 
 import java.nio.FloatBuffer;
 

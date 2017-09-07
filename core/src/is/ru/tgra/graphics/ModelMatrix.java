@@ -1,4 +1,4 @@
-package is.ru.tgra;
+package is.ru.tgra.graphics;
 
 public class ModelMatrix extends Matrix {
 	float[] M2;

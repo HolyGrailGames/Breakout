@@ -1,39 +1,41 @@
-package is.ru.tgra;
+package is.ru.tgra.shapes;
 
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 
-public class Box {
-	protected Point2D position;
-	protected Vector2D scale;
-	protected float zRotation;
-	protected Color color;
+import is.ru.tgra.graphics.GraphicsEnvironment;
+import is.ru.tgra.objects.GameObject;
+import is.ru.tgra.utils.Point2D;
+import is.ru.tgra.utils.Settings;
+import is.ru.tgra.utils.Vector2D;
+
+public class Box extends GameObject {
 	private boolean moving = false;
-	private Vector2D velocity;
+	
 	private Random random = new Random();
 	private float speed = 50.0f;
+	private float rotationPerSecond;
+	private Vector2D velocity;
 	
 	public Box(Point2D position, Vector2D scale, float zRotation, Color color) {
-		this.position = position;
-		this.scale = scale;
-		this.zRotation = zRotation;
-		this.color = color;
+		super(position, scale, zRotation, color);
 		
 		this.velocity = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 2 -1);
+		this.rotationPerSecond = random.nextFloat() * 360 - 180;
 	}
 	
 	public Box(Point2D position, Vector2D scale, Color color) {
-		this.position = position;
-		this.scale = scale;
-		this.zRotation = 0;
-		this.color = color;
+		super(position, scale, 0.0f, color);
 		
 		this.velocity = new Vector2D(random.nextFloat() * 2 - 1, random.nextFloat() * 4);
+		this.rotationPerSecond = random.nextFloat() * 360 - 180;
 	}
 	
+	@Override
 	public void update(float deltaTime) {
 		if (moving) {
+			zRotation += rotationPerSecond * deltaTime;
 			velocity.y += Settings.GRAVITY * deltaTime;
 			translate(this.velocity.x*deltaTime*speed, this.velocity.y*deltaTime*speed);
 			if (position.y + scale.y/2 < 0) {
@@ -43,33 +45,17 @@ public class Box {
 		}
 	}
 	
+	@Override
 	public void draw() {
 		GraphicsEnvironment.clearModelMatrix();
 		GraphicsEnvironment.setColor(color);
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
-		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
 		GraphicsEnvironment.setModelMatrixRotationZ(zRotation);
+		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
 		BoxGraphic.drawSolidBox();
-	}
-	
-	public void translate(float dx, float dy) {
-		position.x += dx;
-		position.y += dy;
 	}
 	
 	public void setMoving(boolean moving) {
 		this.moving = moving;
-	}
-	
-	public void setColor(Color color) {
-		this.color = color;
-	}
-		
-	public void setAngle(float angle) {
-		this.zRotation = angle;
-	}
-	
-	public float getAngle() {
-		return this.zRotation;
 	}
 }

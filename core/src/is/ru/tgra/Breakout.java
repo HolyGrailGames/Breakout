@@ -9,6 +9,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
+import is.ru.tgra.graphics.GraphicsEnvironment;
+import is.ru.tgra.objects.Block;
+import is.ru.tgra.objects.Paddle;
+import is.ru.tgra.shapes.Box;
+import is.ru.tgra.shapes.BoxGraphic;
+import is.ru.tgra.shapes.CircleGraphic;
+import is.ru.tgra.utils.Point2D;
+import is.ru.tgra.utils.Settings;
+import is.ru.tgra.utils.Vector2D;
+
 
 public class Breakout extends ApplicationAdapter {
 	
@@ -171,20 +181,19 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	private void setupLevelOne() {
-		
-		float originX = Settings.LEVEL1_ORIGIN_X;
-		float originY = Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y;
-		Block block;
+		float originX = ((Settings.windowWidth - (Settings.LEVEL1_COLS * (Settings.BLOCK_WIDTH + Settings.BLOCK_SPACING))) / 2) + (Settings.BLOCK_WIDTH / 2);;
+		float originY = Settings.windowHeight - Settings.LEVEL1_ORIGIN_Y;
 		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
 			for(int j = 0; j < Settings.LEVEL1_ROWS; j++) {
 				// Spawn new block, then lower the point of origin to the next row
-				block = new Block(new Point2D(originX, originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 8);
-				blocks.add(block);
-				originY -= Settings.ROW_SPACE;
+
+				blocks.add(new Block(new Point2D(originX, originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 5));
+				originY -= Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT;
+
 			}
 			// Set origin to the next column and reset the height
-			originX += Settings.COLUMN_SPACE;
-			originY = Gdx.graphics.getHeight() - Settings.LEVEL1_ORIGIN_Y;
+			originX += Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH;
+			originY = Settings.windowHeight - Settings.LEVEL1_ORIGIN_Y;
 		}
 	}
 }
