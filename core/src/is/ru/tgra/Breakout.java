@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
 import is.ru.tgra.graphics.GraphicsEnvironment;
+import is.ru.tgra.managers.GameState;
+import is.ru.tgra.objects.Ball;
 import is.ru.tgra.objects.Block;
 import is.ru.tgra.objects.Paddle;
 import is.ru.tgra.shapes.Box;
@@ -30,14 +32,19 @@ public class Breakout extends ApplicationAdapter {
 	private int lastLevelIndex;
 	private int blockCount;
 	
+	private boolean startedPlaying;
+	
 	private float deltaTime;
 	
 	private Paddle paddle;
+	private Ball ball;
 	private Box[] walls = new Box[3];
 	private List<Block> blocks = new ArrayList<Block>();
 	
 	private float mouseX;
 	private float mouseY;
+	
+	private GameState gameState = GameState.PLAYING;
 
 	@Override
 	public void create() {
@@ -77,6 +84,7 @@ public class Breakout extends ApplicationAdapter {
 		CircleGraphic.create();
 		
 		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED);
+		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), new Vector2D(10.0f, 10.0f), Color.NAVY, Settings.BALL_SPEED);
 		
 		// Left wall
 		walls[0] = new Box(new Point2D(Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
@@ -92,19 +100,25 @@ public class Breakout extends ApplicationAdapter {
 		levelIndex = 1;
 		// Set this variable to the last level
 		lastLevelIndex = 1;
-		setupLevelOne();
+		prepareNextLevel();
 		blockCount = blocks.size();
 	}
 
-	private void update() {
+	private void updateGame() {
+		
+		
 		if (blockCount == 0) {
 			prepareNextLevel();
 		}
 		deltaTime = Gdx.graphics.getDeltaTime();
 		
 		processInput();
-		
 		paddle.update(deltaTime);
+		if (!startedPlaying) {
+			ball.translate(paddle.getPosition().x - ball.getPosition().x, 0);
+		}
+		ball.update(deltaTime);
+		
 		
 		for (Block block : blocks) {
 			block.update(deltaTime);	
@@ -116,13 +130,14 @@ public class Breakout extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 	
-	private void display() {
+	private void displayGame() {
 		clearScreen(Settings.LIGHT_YELLLOW);
-				
+		
 		for (Box b : walls) {
 			b.draw();
 		}
 		paddle.draw();
+		ball.draw();
 		
 		for (Block block : blocks) {
 			block.draw();	
@@ -131,8 +146,29 @@ public class Breakout extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		update();
-		display();
+		switch (gameState) {
+		case MAIN_MENU:
+			//updateMainMenu();
+			//displayMainMenu();
+			break;
+		
+		case PLAYING:
+			updateGame();
+			displayGame();
+			break;
+			
+		case GAME_OVER:
+			//updateGameOver();
+			//displayGameOver();
+			break;
+		
+		case LEVEL_TRANSITION:
+			//updateLevelTransition();
+			//displayLevelTransition();
+			break;
+		default:
+			break;
+		}	
 	}
 	
 	private void processInput() {
@@ -154,6 +190,14 @@ public class Breakout extends ApplicationAdapter {
 		boolean moveLeft = false;
 		boolean moveRight = false;
 		
+		if (!startedPlaying) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+				startedPlaying = true;
+				ball.setMoving(true);
+			}
+		}
+		
+		
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			moveLeft = true;
 		}
@@ -165,7 +209,9 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	private void prepareNextLevel() {
+		startedPlaying = false;
 		if (levelIndex == lastLevelIndex) {
+			// TODO: Here we would set state to WON GAME
 			levelIndex = 1;	
 		} else {
 			levelIndex++;
