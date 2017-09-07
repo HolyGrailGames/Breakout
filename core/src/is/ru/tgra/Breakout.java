@@ -146,6 +146,7 @@ public class Breakout extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		Gdx.graphics.setTitle("Ultimate Breakout | FPS: " + Gdx.graphics.getFramesPerSecond());
 		switch (gameState) {
 		case MAIN_MENU:
 			//updateMainMenu();
