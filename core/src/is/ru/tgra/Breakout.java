@@ -16,6 +16,10 @@ public class Breakout extends ApplicationAdapter {
 	private int vertexShaderID;
 	private int fragmentShaderID;
 
+	private int levelIndex;
+	private int lastLevelIndex;
+	private int blockCount;
+	
 	private float deltaTime;
 	
 	private Paddle paddle;
@@ -74,10 +78,18 @@ public class Breakout extends ApplicationAdapter {
 		walls[2] = new Box(new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
 						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
 		
+		// Start game at level 1
+		levelIndex = 1;
+		// Set this variable to the last level
+		lastLevelIndex = 1;
 		setupLevelOne();
+		blockCount = blocks.size();
 	}
 
 	private void update() {
+		if (blockCount == 0) {
+			prepareNextLevel();
+		}
 		deltaTime = Gdx.graphics.getDeltaTime();
 		
 		processInput();
@@ -124,6 +136,7 @@ public class Breakout extends ApplicationAdapter {
 			for (Block block : blocks) {
 				if (block.pointIsInside(mouseX, mouseY)) {
 					block.explode();
+					blockCount--;
 				}	
 			}
 		}
@@ -141,6 +154,22 @@ public class Breakout extends ApplicationAdapter {
 		paddle.setDirection(Settings.RIGHT, moveRight);
 	}
 	
+	private void prepareNextLevel() {
+		if (levelIndex == lastLevelIndex) {
+			levelIndex = 1;	
+		} else {
+			levelIndex++;
+		}
+		blocks.clear();
+		switch(levelIndex) {
+			case 1:
+				setupLevelOne();
+				break;
+		}
+		
+		blockCount = blocks.size();	
+	}
+	
 	private void setupLevelOne() {
 		
 		float originX = Settings.LEVEL1_ORIGIN_X;
@@ -149,7 +178,7 @@ public class Breakout extends ApplicationAdapter {
 		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
 			for(int j = 0; j < Settings.LEVEL1_ROWS; j++) {
 				// Spawn new block, then lower the point of origin to the next row
-				block = new Block(new Point2D(originX, originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 5);
+				block = new Block(new Point2D(originX, originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.GOLDENROD, 8);
 				blocks.add(block);
 				originY -= Settings.ROW_SPACE;
 			}
