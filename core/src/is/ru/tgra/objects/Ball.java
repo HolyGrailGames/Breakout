@@ -14,14 +14,17 @@ public class Ball extends GameObject
 	private boolean moving;
 	private Vector2D direction;
 	private float speed;
+	private float radius;
+	
 	private Random random = new Random();
 	private int[] directions = {-1, 1};
 	
-	public Ball(Point2D position, Vector2D scale, Color color, float speed)
+	public Ball(Point2D position, float radius, Color color, float speed)
 	{
-		super(position, scale, 0, color);
+		super(position, new Vector2D(radius, radius), 0, color);
 		direction = new Vector2D(directions[random.nextInt(1)], 1);
 		this.speed = speed;
+		this.radius = radius;
 		moving = false;
 	}
 
@@ -45,5 +48,17 @@ public class Ball extends GameObject
 	
 	public void setMoving(boolean moving) {
 		this.moving = moving;
+	}
+	
+	public Vector2D getDirection() {
+		return this.direction;
+	}
+	
+	public float getRadius() {
+		return this.radius;
+	}
+	
+	public void setDirection(Vector2D direction) {
+		this.direction = direction;
 	}
 }

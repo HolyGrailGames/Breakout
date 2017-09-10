@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.managers.GameState;
@@ -19,6 +20,7 @@ import is.ru.tgra.shapes.BoxGraphic;
 import is.ru.tgra.shapes.CircleGraphic;
 import is.ru.tgra.utils.Point2D;
 import is.ru.tgra.utils.Settings;
+import is.ru.tgra.utils.Utils;
 import is.ru.tgra.utils.Vector2D;
 
 
@@ -40,6 +42,8 @@ public class Breakout extends ApplicationAdapter {
 	private Ball ball;
 	private Box[] walls = new Box[3];
 	private List<Block> blocks = new ArrayList<Block>();
+	
+	private Point2D[] bounds = new Point2D[4];
 	
 	private float mouseX;
 	private float mouseY;
@@ -84,17 +88,28 @@ public class Breakout extends ApplicationAdapter {
 		CircleGraphic.create();
 		
 		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED);
-		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), new Vector2D(10.0f, 10.0f), Color.NAVY, Settings.BALL_SPEED);
+		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), Settings.BALL_RADIUS, Color.NAVY, Settings.BALL_SPEED);
 		
 		// Left wall
-		walls[0] = new Box(new Point2D(Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
+		walls[0] = new Box(new Point2D(Settings.WALL_THICKNESS/2, (Settings.windowHeight-Settings.WALL_THICKNESS)/2), 
 						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
 		// Top wall
 		walls[1] = new Box(new Point2D(Settings.windowWidth/2, Settings.windowHeight-Settings.WALL_THICKNESS/2), 
 						   new Vector2D(Settings.windowWidth, Settings.WALL_THICKNESS), 0.0f, Settings.LIGHT_GREEN);
 		// Right wall
-		walls[2] = new Box(new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS/2, Settings.windowHeight/2), 
+		walls[2] = new Box(new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS/2, (Settings.windowHeight-Settings.WALL_THICKNESS)/2), 
 						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
+		
+		// Bottom left
+		bounds[0] = new Point2D(Settings.WALL_THICKNESS, 0);
+		// Top left
+		bounds[1] = new Point2D(Settings.WALL_THICKNESS, Settings.windowHeight-Settings.WALL_THICKNESS);
+		// Top right
+		bounds[2] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, Settings.windowHeight-Settings.WALL_THICKNESS);
+		// Bottom right
+		bounds[3] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, 0);
+		
+		
 		
 		// Start game at level 1
 		levelIndex = 1;
@@ -117,6 +132,8 @@ public class Breakout extends ApplicationAdapter {
 		if (!startedPlaying) {
 			ball.translate(paddle.getPosition().x - ball.getPosition().x, 0);
 		}
+		
+		checkCollisions(deltaTime);
 		ball.update(deltaTime);
 		
 		
@@ -243,4 +260,31 @@ public class Breakout extends ApplicationAdapter {
 			originY = Settings.windowHeight - Settings.LEVEL1_ORIGIN_Y;
 		}
 	}
+	
+	
+	private void checkCollisions(float deltaTime) {
+		Point2D point = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
+		
+		Vector2D n = new Vector2D(bounds[1].x-bounds[0].x, bounds[1].y-bounds[0].y);
+		Vector2D c = ball.getDirection();
+		Point2D A = ball.getPosition();
+		Point2D B = bounds[0];
+		Point2D B2 = bounds[1];
+		
+		float tHit = Utils.tHit(A, B, n, c);
+		Point2D pHit = new Point2D(ball.getPosition().x + tHit * ball.getDirection().x,
+								   ball.getPosition().y + tHit * ball.getDirection().y);
+		
+		if (pHit.isBetween(B, B2) && tHit < deltaTime) {
+			Vector2D a = c;
+			
+			float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
+			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
+			ball.setDirection(new Vector2D(x,y));
+			
+			System.out.println("hit the wall");
+		}
+		
+	}
+	
 }
