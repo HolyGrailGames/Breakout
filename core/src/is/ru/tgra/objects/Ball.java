@@ -22,7 +22,7 @@ public class Ball extends GameObject
 	public Ball(Point2D position, float radius, Color color, float speed)
 	{
 		super(position, new Vector2D(radius, radius), 0, color);
-		direction = new Vector2D(directions[random.nextInt(1)], 1);
+		direction = new Vector2D(0.3f, 1);
 		this.speed = speed;
 		this.radius = radius;
 		moving = false;
@@ -52,6 +52,10 @@ public class Ball extends GameObject
 	
 	public Vector2D getDirection() {
 		return this.direction;
+	}
+	
+	public Vector2D getVelocity() {
+		return new Vector2D(direction.x*speed, direction.y*speed);
 	}
 	
 	public float getRadius() {

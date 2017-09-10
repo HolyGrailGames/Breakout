@@ -103,9 +103,9 @@ public class Breakout extends ApplicationAdapter {
 		// Bottom left
 		bounds[0] = new Point2D(Settings.WALL_THICKNESS, 0);
 		// Top left
-		bounds[1] = new Point2D(Settings.WALL_THICKNESS, Settings.windowHeight-Settings.WALL_THICKNESS);
+		bounds[1] = new Point2D(Settings.WALL_THICKNESS, -Settings.WALL_THICKNESS);
 		// Top right
-		bounds[2] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, Settings.windowHeight-Settings.WALL_THICKNESS);
+		bounds[2] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, -Settings.WALL_THICKNESS);
 		// Bottom right
 		bounds[3] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, 0);
 		
@@ -263,28 +263,40 @@ public class Breakout extends ApplicationAdapter {
 	
 	
 	private void checkCollisions(float deltaTime) {
-		Point2D point = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
+		//Point2D point = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
 		
-		Vector2D n = new Vector2D(bounds[1].x-bounds[0].x, bounds[1].y-bounds[0].y);
-		Vector2D c = ball.getDirection();
-		Point2D A = ball.getPosition();
-		Point2D B = bounds[0];
-		Point2D B2 = bounds[1];
 		
-		float tHit = Utils.tHit(A, B, n, c);
-		Point2D pHit = new Point2D(ball.getPosition().x + tHit * ball.getDirection().x,
-								   ball.getPosition().y + tHit * ball.getDirection().y);
-		
-		if (pHit.isBetween(B, B2) && tHit < deltaTime) {
-			Vector2D a = c;
+		//for (int i = 0; i < bounds.length; i++) {
+			//int j = (i < bounds.length-1) ? i+1 : 0;
+			Vector2D v = new Vector2D(bounds[1].x-bounds[0].x, bounds[1].y-bounds[0].y);
+			Vector2D n = new Vector2D(v.y, -v.x);
+					
+					
+			Vector2D c = ball.getVelocity();
+			Point2D A = ball.getPosition();
+			Point2D B = bounds[1];
+			Point2D B2 = bounds[2];
 			
-			float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
-			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
-			ball.setDirection(new Vector2D(x,y));
+			float tHit = Utils.tHit(A, B, n, c);
+			Point2D pHit = new Point2D(ball.getPosition().x + tHit * c.x,
+									   ball.getPosition().y + tHit * c.y);
+
+			System.out.println("Thit:      " + tHit);
+			System.out.println("DeltaTime: " + deltaTime);
 			
-			System.out.println("hit the wall");
-		}
-		
+			// TODO: check if pHit is on line segment
+			if (/*pHit.isBetween(B, B2) &&*/ tHit > 0 && tHit < deltaTime) {
+				Vector2D a = c;
+				
+				float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
+				float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
+				Vector2D newDirection = new Vector2D(x,y);
+				ball.setDirection(newDirection.normalize());
+				
+				//System.out.println("hit the wall");
+				//System.out.println("new direction: " + newDirection.normalize());
+			}
+		//}
 	}
 	
 }

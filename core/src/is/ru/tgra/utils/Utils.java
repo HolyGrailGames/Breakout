@@ -24,9 +24,8 @@ public class Utils {
 		return new Point2D(x,y);
 	}
 	
-	public static float tHit(Point2D A, Point2D B1, Vector2D n, Vector2D c) {
-		Vector2D BminA = new Vector2D(B1.x-A.x, B1.y-A.y);
-		
+	public static float tHit(Point2D A, Point2D B, Vector2D n, Vector2D c) {
+		Vector2D BminA = new Vector2D(B.x-A.x, B.y-A.y);
 		return ((n.dot(BminA)) / (n.dot(c)));
 	}
 }
