@@ -2,6 +2,7 @@ package is.ru.tgra;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -39,6 +40,9 @@ public class Breakout extends ApplicationAdapter {
 	private boolean startedPlaying;
 	
 	private float deltaTime;
+	
+	private float shakeTimer = 0.0f;
+	private Random random = new Random();
 	
 	private Paddle paddle;
 	private Ball ball;
@@ -156,20 +160,33 @@ public class Breakout extends ApplicationAdapter {
 					boolean collision = checkCollisions(blockPoints[i], blockPoints[j], deltaTime);
 					if (collision) {
 						block.explode();
+						blockCount--;
+						shakeTimer = Settings.SHAKE_TIMER;
 						break;
 					}
 				}	
 			}
 			
 		}
-		 
-		
 		
 		ball.update(deltaTime);
 		
 		
 		for (Block block : blocks) {
 			block.update(deltaTime);	
+		}
+		
+		if (shakeTimer > 0) {
+			shakeTimer -= deltaTime;
+			
+			int offsetX = random.nextInt(8) - 4;
+			int offsetY = random.nextInt(8) - 4;
+			
+			System.out.println(offsetX + " " + offsetY);
+			GraphicsEnvironment.setWindow(-offsetX, Settings.windowWidth-offsetX, -offsetY, Settings.windowHeight-offsetY);
+		}
+		else {
+			GraphicsEnvironment.setWindow(0, Settings.windowWidth, 0, Settings.windowHeight);
 		}
 	}
 	
@@ -312,6 +329,7 @@ public class Breakout extends ApplicationAdapter {
 		Vector2D c = ball.getVelocity();
 		
 		float tHit = Float.MAX_VALUE;
+		
 		Point2D pHit = new Point2D();
 		for (int i = 0; i < points.length; i++) {
 			Point2D A = points[i];
@@ -319,8 +337,7 @@ public class Breakout extends ApplicationAdapter {
 			float newtHit = Utils.tHit(A, B, n, c);
 			if (newtHit < tHit) {
 				tHit = newtHit;
-				pHit = new Point2D(A.x + tHit * c.x,
-						A.y + tHit * c.y);
+				pHit = new Point2D(A.x + tHit * c.x, A.y + tHit * c.y);
 			}
 		}
 		if (pHit.isBetween(B, B2) &&  tHit > 0 && tHit < deltaTime) {

@@ -28,6 +28,8 @@ public class Settings {
 	public static final float BALL_SPEED = 400.0f;
 	public static final float BALL_RADIUS = 10.0f;
 	
+	public static final float SHAKE_TIMER = 0.2f;
+	
 	public static final String LEFT = "LEFT";
 	public static final String RIGHT = "RIGHT";
 	public static final String UP = "UP";
