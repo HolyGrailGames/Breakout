@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 public class SoundManager {
-	//public static final Sound HURT = Gdx.audio.newSound(Gdx.files.internal("sounds/hurt.wav"));
+	public static final Sound POP = Gdx.audio.newSound(Gdx.files.internal("sounds/pop.wav"));
 	
 	/**
 	 * Private constructor to prevent anyone from creating an instance of this class.

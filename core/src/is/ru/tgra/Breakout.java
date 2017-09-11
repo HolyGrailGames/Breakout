@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.managers.GameState;
+import is.ru.tgra.managers.SoundManager;
 import is.ru.tgra.objects.Ball;
 import is.ru.tgra.objects.Block;
 import is.ru.tgra.objects.Paddle;
@@ -162,6 +163,7 @@ public class Breakout extends ApplicationAdapter {
 						block.explode();
 						blockCount--;
 						shakeTimer = Settings.SHAKE_TIMER;
+						SoundManager.POP.play();
 						break;
 					}
 				}	
@@ -182,7 +184,6 @@ public class Breakout extends ApplicationAdapter {
 			int offsetX = random.nextInt(8) - 4;
 			int offsetY = random.nextInt(8) - 4;
 			
-			System.out.println(offsetX + " " + offsetY);
 			GraphicsEnvironment.setWindow(-offsetX, Settings.windowWidth-offsetX, -offsetY, Settings.windowHeight-offsetY);
 		}
 		else {
@@ -203,15 +204,6 @@ public class Breakout extends ApplicationAdapter {
 		}
 		paddle.draw();
 		ball.draw();
-		
-		Point2D[] paddlePoints = paddle.getPoints();
-		for (int i = 0; i < paddlePoints.length - 1; i++) {
-			GraphicsEnvironment.clearModelMatrix();
-			GraphicsEnvironment.setColor(Color.BLACK);
-			
-			LineGraphic.setPoints(paddlePoints[i], paddlePoints[i+1]);
-			LineGraphic.drawLine();
-		}
 		
 		for (Block block : blocks) {
 			block.draw();	
