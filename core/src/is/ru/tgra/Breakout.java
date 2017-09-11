@@ -103,9 +103,9 @@ public class Breakout extends ApplicationAdapter {
 		// Bottom left
 		bounds[0] = new Point2D(Settings.WALL_THICKNESS, 0);
 		// Top left
-		bounds[1] = new Point2D(Settings.WALL_THICKNESS, -Settings.WALL_THICKNESS);
+		bounds[1] = new Point2D(Settings.WALL_THICKNESS, Settings.windowHeight -Settings.WALL_THICKNESS);
 		// Top right
-		bounds[2] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, -Settings.WALL_THICKNESS);
+		bounds[2] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, Settings.windowHeight -Settings.WALL_THICKNESS);
 		// Bottom right
 		bounds[3] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, 0);
 		
@@ -263,19 +263,19 @@ public class Breakout extends ApplicationAdapter {
 	
 	
 	private void checkCollisions(float deltaTime) {
-		//Point2D point = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
+		Point2D point = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
 		
 		
-		//for (int i = 0; i < bounds.length; i++) {
-			//int j = (i < bounds.length-1) ? i+1 : 0;
-			Vector2D v = new Vector2D(bounds[1].x-bounds[0].x, bounds[1].y-bounds[0].y);
+		for (int i = 0; i < bounds.length; i++) {
+			int j = (i < bounds.length-1) ? i+1 : 0;
+			Vector2D v = new Vector2D(bounds[j].x-bounds[i].x, bounds[j].y-bounds[i].y);
 			Vector2D n = new Vector2D(v.y, -v.x);
 					
 					
 			Vector2D c = ball.getVelocity();
 			Point2D A = ball.getPosition();
-			Point2D B = bounds[1];
-			Point2D B2 = bounds[2];
+			Point2D B = bounds[i];
+			Point2D B2 = bounds[j];
 			
 			float tHit = Utils.tHit(A, B, n, c);
 			Point2D pHit = new Point2D(ball.getPosition().x + tHit * c.x,
@@ -293,10 +293,10 @@ public class Breakout extends ApplicationAdapter {
 				Vector2D newDirection = new Vector2D(x,y);
 				ball.setDirection(newDirection.normalize());
 				
-				//System.out.println("hit the wall");
-				//System.out.println("new direction: " + newDirection.normalize());
+				System.out.println("hit the wall");
+				System.out.println("new direction: " + newDirection.normalize());
 			}
-		//}
+		}
 	}
 	
 }

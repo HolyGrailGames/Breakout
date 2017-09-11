@@ -22,7 +22,7 @@ public class Ball extends GameObject
 	public Ball(Point2D position, float radius, Color color, float speed)
 	{
 		super(position, new Vector2D(radius, radius), 0, color);
-		direction = new Vector2D(0.3f, 1);
+		direction = new Vector2D(-1, 1);
 		this.speed = speed;
 		this.radius = radius;
 		moving = false;
