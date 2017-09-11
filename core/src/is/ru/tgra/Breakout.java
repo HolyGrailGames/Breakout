@@ -263,38 +263,37 @@ public class Breakout extends ApplicationAdapter {
 	
 	
 	private void checkCollisions(float deltaTime) {
-		Point2D point = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
-		
+		Point2D A = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
 		
 		for (int i = 0; i < bounds.length; i++) {
 			int j = (i < bounds.length-1) ? i+1 : 0;
 			Vector2D v = new Vector2D(bounds[j].x-bounds[i].x, bounds[j].y-bounds[i].y);
 			Vector2D n = new Vector2D(v.y, -v.x);
 					
-					
 			Vector2D c = ball.getVelocity();
-			Point2D A = ball.getPosition();
 			Point2D B = bounds[i];
 			Point2D B2 = bounds[j];
 			
 			float tHit = Utils.tHit(A, B, n, c);
 			Point2D pHit = new Point2D(ball.getPosition().x + tHit * c.x,
 									   ball.getPosition().y + tHit * c.y);
-
-			System.out.println("Thit:      " + tHit);
-			System.out.println("DeltaTime: " + deltaTime);
 			
 			// TODO: check if pHit is on line segment
-			if (/*pHit.isBetween(B, B2) &&*/ tHit > 0 && tHit < deltaTime) {
+			if (pHit.isBetween(B, B2) &&  tHit > 0 && tHit < deltaTime) {
 				Vector2D a = c;
-				
+				pHit.isBetween(B, B2);
 				float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
 				float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
 				Vector2D newDirection = new Vector2D(x,y);
 				ball.setDirection(newDirection.normalize());
-				
+			
+				/*
+				System.out.println("Thit:      " + tHit);
+				System.out.println("DeltaTime: " + deltaTime);
+				System.out.println("phit:      " + pHit);
 				System.out.println("hit the wall");
 				System.out.println("new direction: " + newDirection.normalize());
+				*/
 			}
 		}
 	}
