@@ -294,6 +294,7 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	private void setupLevelOne() {
+		SoundManager.BREAKOUT.play();
 		float originX = ((Settings.windowWidth - (Settings.LEVEL1_COLS * (Settings.BLOCK_WIDTH + Settings.BLOCK_SPACING))) / 2) + (Settings.BLOCK_WIDTH / 2);;
 		float originY = Settings.windowHeight - Settings.LEVEL1_ORIGIN_Y;
 		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
