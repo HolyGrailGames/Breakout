@@ -147,6 +147,24 @@ public class Breakout extends ApplicationAdapter {
 			checkCollisions(paddlePoints[i], paddlePoints[i+1], deltaTime);
 		}
 		
+		for (Block block : blocks) {
+			if (!block.getExploded()) {
+				Point2D[] blockPoints = block.getPoints();
+				
+				for (int i = 0; i < blockPoints.length; i++) {
+					int j = (i < blockPoints.length - 1) ? i+1 : 0;
+					boolean collision = checkCollisions(blockPoints[i], blockPoints[j], deltaTime);
+					if (collision) {
+						block.explode();
+						break;
+					}
+				}	
+			}
+			
+		}
+		 
+		
+		
 		ball.update(deltaTime);
 		
 		
@@ -284,7 +302,7 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	
-	private void checkCollisions(Point2D B, Point2D B2, float deltaTime) {
+	private boolean checkCollisions(Point2D B, Point2D B2, float deltaTime) {
 		
 		Point2D[] points = ball.getPointsOnBall();
 		
@@ -312,12 +330,19 @@ public class Breakout extends ApplicationAdapter {
 			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
 			Vector2D newDirection = new Vector2D(x,y);
 			ball.setDirection(newDirection.normalize());
+			/*
 			System.out.println("------------------------------------------");
 			System.out.println("Thit:      " + tHit);
 			System.out.println("DeltaTime: " + deltaTime);
 			System.out.println("phit:      " + pHit);
 			System.out.println("new direction: " + newDirection.normalize());
+			*/
+			return true;
 		}
+		
+		return false;
 	}
+	
+	
 	
 }

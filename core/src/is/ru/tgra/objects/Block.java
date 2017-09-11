@@ -19,6 +19,7 @@ public class Block {
 	private int subdivisions;
 	private boolean exploded = false;
 	private Random random = new Random();
+	private Point2D[] points = new Point2D[4];
 	
 	/**
 	 * Constructor.
@@ -34,6 +35,7 @@ public class Block {
 		this.color = color;
 		this.subdivisions = (int)Utils.Clamp(subdivisions, 0, 8);
 		initializeSubBoxes();
+		initalizePoints();
 	}
 	
 	public void update(float deltaTime) {
@@ -61,6 +63,7 @@ public class Block {
 	}
 	
 	public void explode() {
+		exploded = true;
 		for (Box box : subBoxes) {
 			box.setMoving(true);
 			box.setColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1.0f));
@@ -92,5 +95,20 @@ public class Block {
 					subdivide(numDivisionsLeft-1, Settings.HORIZONTAL, Px, Py+Sy/4, Sx, Sy/2));
 			return list;
 		}
+	}
+	
+	public Point2D[] getPoints() {
+		return this.points;
+	}
+	
+	private void initalizePoints() {
+		points[0] = new Point2D(position.x - (scale.x/2), position.y - (scale.y/2));
+		points[1] = new Point2D(position.x - (scale.x/2), position.y + (scale.y/2));
+		points[2] = new Point2D(position.x + (scale.x/2), position.y + (scale.y/2));
+		points[3] = new Point2D(position.x + (scale.x/2), position.y - (scale.y/2));
+	}
+	
+	public boolean getExploded() {
+		return this.exploded;
 	}
 }
