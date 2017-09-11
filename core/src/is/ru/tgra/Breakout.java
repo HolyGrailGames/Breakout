@@ -18,6 +18,7 @@ import is.ru.tgra.objects.Paddle;
 import is.ru.tgra.shapes.Box;
 import is.ru.tgra.shapes.BoxGraphic;
 import is.ru.tgra.shapes.CircleGraphic;
+import is.ru.tgra.shapes.LineGraphic;
 import is.ru.tgra.utils.Point2D;
 import is.ru.tgra.utils.Settings;
 import is.ru.tgra.utils.Utils;
@@ -87,6 +88,7 @@ public class Breakout extends ApplicationAdapter {
 
 		BoxGraphic.create();
 		CircleGraphic.create();
+		LineGraphic.create();
 		
 		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED);
 		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), Settings.BALL_RADIUS, Color.NAVY, Settings.BALL_SPEED);
@@ -166,6 +168,15 @@ public class Breakout extends ApplicationAdapter {
 		}
 		paddle.draw();
 		ball.draw();
+		
+		Point2D[] paddlePoints = paddle.getPoints();
+		for (int i = 0; i < paddlePoints.length - 1; i++) {
+			GraphicsEnvironment.clearModelMatrix();
+			GraphicsEnvironment.setColor(Color.BLACK);
+			
+			LineGraphic.setPoints(paddlePoints[i], paddlePoints[i+1]);
+			LineGraphic.drawLine();
+		}
 		
 		for (Block block : blocks) {
 			block.draw();	

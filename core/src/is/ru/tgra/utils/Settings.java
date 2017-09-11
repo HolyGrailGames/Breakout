@@ -25,7 +25,7 @@ public class Settings {
 	public static final float BLOCK_WIDTH = 60.0f;
 	public static final float BLOCK_HEIGHT = 24.0f;
 	public static final float BLOCK_SPACING = 6.0f;
-	public static final float BALL_SPEED = 300.0f;
+	public static final float BALL_SPEED = 400.0f;
 	public static final float BALL_RADIUS = 10.0f;
 	
 	public static final String LEFT = "LEFT";

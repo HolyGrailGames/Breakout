@@ -60,10 +60,17 @@ public class Paddle extends Box {
 	}
 	
 	public Point2D[] getPoints() {
-		points[0].setPosition(position.x - scale.x, position.y - scale.y);
-		points[1].setPosition(position.x - scale.x, position.y + scale.y);
-		points[2].setPosition(position.x + scale.x, position.y + scale.y);
-		points[1].setPosition(position.x + scale.x, position.y - scale.y);
+		points[0].setPosition(position.x - (scale.x/2), position.y - (scale.y/2));
+		points[1].setPosition(position.x - (scale.x/2), position.y + (scale.y/2));
+		points[2].setPosition(position.x + (scale.x/2), position.y + (scale.y/2));
+		points[3].setPosition(position.x + (scale.x/2), position.y - (scale.y/2));
+		
+		/*
+		System.out.println("---------------------------------------------------");
+		for (Point2D point : points) {
+			System.out.println(point);
+		}
+		*/
 		
 		return points;
 	}
