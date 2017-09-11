@@ -17,7 +17,7 @@ public class Block {
 	private Color color;
 	private ArrayList<Box> subBoxes;
 	private int subdivisions;
-	private boolean exploding = false;
+	private boolean exploded = false;
 	private Random random = new Random();
 	
 	/**
@@ -49,12 +49,12 @@ public class Block {
 	}
 	
 	public boolean pointIsInside(float mouseX, float mouseY) {
-		if (exploding) {
+		if (exploded) {
 			return false;
 		}
 		if (mouseX <= position.x+scale.x/2 && mouseX >= position.x-scale.x/2 &&
 			mouseY <= position.y+scale.y/2 && mouseY >= position.y-scale.y/2) {
-			exploding = true;
+			exploded = true;
 			return true;
 		}
 		return false;

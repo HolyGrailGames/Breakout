@@ -24,6 +24,7 @@ import is.ru.tgra.utils.Utils;
 import is.ru.tgra.utils.Vector2D;
 
 
+
 public class Breakout extends ApplicationAdapter {
 	
 	private int renderingProgramID;
@@ -47,7 +48,7 @@ public class Breakout extends ApplicationAdapter {
 	
 	private float mouseX;
 	private float mouseY;
-	
+
 	private GameState gameState = GameState.PLAYING;
 
 	@Override
@@ -133,7 +134,17 @@ public class Breakout extends ApplicationAdapter {
 			ball.translate(paddle.getPosition().x - ball.getPosition().x, 0);
 		}
 		
-		checkCollisions(deltaTime);
+		for (int i = 0; i < bounds.length; i++) {
+			int j = (i < bounds.length -1) ? i+1 : 0;
+			checkCollisions(bounds[i], bounds[j], deltaTime);	
+		}
+		
+		
+		Point2D[] paddlePoints = paddle.getPoints();
+		for (int i = 0; i < paddlePoints.length - 1; i++) {
+			checkCollisions(paddlePoints[i], paddlePoints[i+1], deltaTime);
+		}
+		
 		ball.update(deltaTime);
 		
 		
@@ -262,39 +273,39 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	
-	private void checkCollisions(float deltaTime) {
-		Point2D A = Utils.getPointOnCircle(ball.getPosition(), ball.getRadius(), ball.getDirection().getAngle());
+	private void checkCollisions(Point2D B, Point2D B2, float deltaTime) {
 		
-		for (int i = 0; i < bounds.length; i++) {
-			int j = (i < bounds.length-1) ? i+1 : 0;
-			Vector2D v = new Vector2D(bounds[j].x-bounds[i].x, bounds[j].y-bounds[i].y);
-			Vector2D n = new Vector2D(v.y, -v.x);
-					
-			Vector2D c = ball.getVelocity();
-			Point2D B = bounds[i];
-			Point2D B2 = bounds[j];
+		Point2D[] points = ball.getPointsOnBall();
+		
+		Vector2D v = new Vector2D(B2.x-B.x, B2.y-B.y);
+		Vector2D n = new Vector2D(v.y, -v.x);
+				
+		Vector2D c = ball.getVelocity();
+		
+		float tHit = Float.MAX_VALUE;
+		Point2D pHit = new Point2D();
+		for (int i = 0; i < points.length; i++) {
+			Point2D A = points[i];
 			
-			float tHit = Utils.tHit(A, B, n, c);
-			Point2D pHit = new Point2D(ball.getPosition().x + tHit * c.x,
-									   ball.getPosition().y + tHit * c.y);
-			
-			// TODO: check if pHit is on line segment
-			if (pHit.isBetween(B, B2) &&  tHit > 0 && tHit < deltaTime) {
-				Vector2D a = c;
-				pHit.isBetween(B, B2);
-				float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
-				float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
-				Vector2D newDirection = new Vector2D(x,y);
-				ball.setDirection(newDirection.normalize());
-			
-				/*
-				System.out.println("Thit:      " + tHit);
-				System.out.println("DeltaTime: " + deltaTime);
-				System.out.println("phit:      " + pHit);
-				System.out.println("hit the wall");
-				System.out.println("new direction: " + newDirection.normalize());
-				*/
+			float newtHit = Utils.tHit(A, B, n, c);
+			if (newtHit < tHit) {
+				tHit = newtHit;
+				pHit = new Point2D(A.x + tHit * c.x,
+						A.y + tHit * c.y);
 			}
+		}
+		if (pHit.isBetween(B, B2) &&  tHit > 0 && tHit < deltaTime) {
+			Vector2D a = c;
+			pHit.isBetween(B, B2);
+			float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
+			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
+			Vector2D newDirection = new Vector2D(x,y);
+			ball.setDirection(newDirection.normalize());
+			System.out.println("------------------------------------------");
+			System.out.println("Thit:      " + tHit);
+			System.out.println("DeltaTime: " + deltaTime);
+			System.out.println("phit:      " + pHit);
+			System.out.println("new direction: " + newDirection.normalize());
 		}
 	}
 	

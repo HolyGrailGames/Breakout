@@ -11,9 +11,11 @@ public class Paddle extends Box {
 	private float speed = 500;
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
+	Point2D[] points = new Point2D[4];
 	
 	public Paddle(Point2D position, Vector2D scale, Color color) {
 		super(position, scale, 0.0f, color);
+		initalizePoints();
 	}
 	
 	@Override
@@ -49,5 +51,20 @@ public class Paddle extends Box {
 		else if (position.x + scale.x/2 > Settings.windowWidth - Settings.WALL_THICKNESS) {
 			position.x = Settings.windowWidth - scale.x/2 - Settings.WALL_THICKNESS;
 		}
+	}
+	
+	private void initalizePoints() {
+		for (int i = 0; i < 4; i++) {
+			points[i] = new Point2D();
+		}
+	}
+	
+	public Point2D[] getPoints() {
+		points[0].setPosition(position.x - scale.x, position.y - scale.y);
+		points[1].setPosition(position.x - scale.x, position.y + scale.y);
+		points[2].setPosition(position.x + scale.x, position.y + scale.y);
+		points[1].setPosition(position.x + scale.x, position.y - scale.y);
+		
+		return points;
 	}
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.shapes.CircleGraphic;
 import is.ru.tgra.utils.Point2D;
+import is.ru.tgra.utils.Utils;
 import is.ru.tgra.utils.Vector2D;
 
 public class Ball extends GameObject
@@ -18,6 +19,7 @@ public class Ball extends GameObject
 	
 	private Random random = new Random();
 	private int[] directions = {-1, 1};
+	private Point2D[] points = new Point2D[8];
 	
 	public Ball(Point2D position, float radius, Color color, float speed)
 	{
@@ -26,13 +28,18 @@ public class Ball extends GameObject
 		this.speed = speed;
 		this.radius = radius;
 		moving = false;
+		
+		
+		initalizePoints();
 	}
 
 	@Override
 	public void update(float deltaTime)
 	{
 		if (moving) {
-			translate(direction.x * speed * deltaTime, direction.y * speed * deltaTime);	
+			float dx = direction.x * speed * deltaTime;
+			float dy = direction.y * speed * deltaTime;
+			translate(dx, dy);	
 		}
 	}
 
@@ -44,6 +51,14 @@ public class Ball extends GameObject
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
 		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
 		CircleGraphic.drawSolidCircle();
+	}
+	
+	@Override
+	public void translate(float dx, float dy) {
+		position.translate(dx, dy);		
+		for (Point2D point : points) {
+			point.translate(dx, dy);
+		}
 	}
 	
 	public void setMoving(boolean moving) {
@@ -64,5 +79,17 @@ public class Ball extends GameObject
 	
 	public void setDirection(Vector2D direction) {
 		this.direction = direction;
+	}
+	
+	public Point2D[] getPointsOnBall() {
+		return this.points;
+	}
+	
+	private void initalizePoints() {
+		float deg = 0.0f;
+		for (int i = 0; i < points.length; i++ ) {
+			points[i] = Utils.getPointOnCircle(getPosition(), getRadius(), Utils.degToRad(deg));
+			deg += 45.0f;
+		}
 	}
 }

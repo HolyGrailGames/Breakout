@@ -51,8 +51,7 @@ public abstract class GameObject {
 	}
 	
 	public void translate(float dx, float dy) {
-		position.x += dx;
-		position.y += dy;
+		position.translate(dx, dy);
 	}
 	
 	/*

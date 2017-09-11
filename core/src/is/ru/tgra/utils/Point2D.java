@@ -26,4 +26,14 @@ public class Point2D {
 		// of a hard-coded epsilon.
 		return Math.abs((this.distance(a) + this.distance(b)) - a.distance(b)) < epsilon;
 	}
+	
+	public void translate(float dx, float dy) {
+		x += dx;
+		y += dy;
+	}
+	
+	public void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
 }

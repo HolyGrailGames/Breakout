@@ -28,4 +28,8 @@ public class Utils {
 		Vector2D BminA = new Vector2D(B.x-A.x, B.y-A.y);
 		return ((n.dot(BminA)) / (n.dot(c)));
 	}
+	
+	public static float degToRad(float deg) {
+		return deg * (float)Math.PI / 180.0f;
+	}
 }
