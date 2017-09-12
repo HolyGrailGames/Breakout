@@ -18,6 +18,8 @@ public class Ball extends GameObject
 	private float speed;
 	private float radius;
 	
+	private float impactTimer = 0.0f;
+	
 	private Random random = new Random();
 	private int[] directions = {-1, 1};
 	private Point2D[] points = new Point2D[8];
@@ -37,22 +39,38 @@ public class Ball extends GameObject
 	@Override
 	public void update(float deltaTime)
 	{
+		if (impactTimer > 0) {
+			impactTimer -= deltaTime;
+		}
+		
 		if (moving) {
 			float dx = direction.x * speed * deltaTime;
 			float dy = direction.y * speed * deltaTime;
-			translate(dx, dy);	
-			speed += Settings.BALL_ACCELERATION * deltaTime;
+			translate(dx, dy);
+			if (speed < Settings.BALL_MAX_SPEED) {
+				speed += Settings.BALL_ACCELERATION * deltaTime;
+			}
+			else if (speed > Settings.BALL_MAX_SPEED) {
+				speed = Settings.BALL_MAX_SPEED;
+			}
+			
 		}
-		System.out.println(speed);
 	}
 
 	@Override
 	public void draw()
 	{
 		GraphicsEnvironment.clearModelMatrix();
-		GraphicsEnvironment.setColor(color);
+		
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
-		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
+		if (impactTimer > 0) {
+			GraphicsEnvironment.setColor(Color.BLACK);
+			GraphicsEnvironment.setModelMatrixScale(scale.x*1.5f, scale.y*1.5f);
+		}
+		else {
+			GraphicsEnvironment.setColor(color);
+			GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);			
+		}
 		GraphicsEnvironment.setShaderMatrix();
 		CircleGraphic.drawSolidCircle();
 	}
@@ -104,6 +122,10 @@ public class Ball extends GameObject
 		}
 		
 		return false;
+	}
+	
+	public void impact() {
+		impactTimer = 0.15f;
 	}
 	
 	public void setMoving(boolean moving) {

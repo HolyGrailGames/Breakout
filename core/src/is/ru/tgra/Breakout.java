@@ -94,7 +94,7 @@ public class Breakout extends ApplicationAdapter {
 		LineGraphic.create();
 		
 		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED);
-		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), Settings.BALL_RADIUS, Color.NAVY, Settings.BALL_SPEED);
+		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), Settings.BALL_RADIUS, Color.TEAL, Settings.BALL_SPEED);
 		
 		// Left wall
 		walls[0] = new Box(new Point2D(Settings.WALL_THICKNESS/2, (Settings.windowHeight-Settings.WALL_THICKNESS)/2), 
@@ -292,6 +292,7 @@ public class Breakout extends ApplicationAdapter {
 					int j = (i < blockPoints.length - 1) ? i+1 : 0;
 					boolean collision = ball.checkCollisionWithLine(blockPoints[i], blockPoints[j], deltaTime);
 					if (collision) {
+						ball.impact();
 						block.explode();
 						blockCount--;
 						ScreenShaker.shake(Settings.SHAKE_POWER, Settings.SHAKE_TIMER);
