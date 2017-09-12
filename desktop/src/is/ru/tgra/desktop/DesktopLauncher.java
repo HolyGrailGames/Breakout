@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		
 		config.title = "Ultimate Breakout!"; // or whatever you like
 		config.width = 800;  //experiment with
-		config.height = 600;  //the window size
+		config.height = 800;  //the window size
 		
 		new LwjglApplication(new Breakout(), config);
 	}

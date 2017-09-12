@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.managers.GameState;
+import is.ru.tgra.managers.ScreenShaker;
 import is.ru.tgra.managers.SoundManager;
 import is.ru.tgra.objects.Ball;
 import is.ru.tgra.objects.Block;
@@ -38,13 +39,10 @@ public class Breakout extends ApplicationAdapter {
 	private int lastLevelIndex;
 	private int blockCount;
 	
-	private boolean startedPlaying;
+	private boolean ballStuckToPaddle;
 	
 	private float deltaTime;
-	
-	private float shakeTimer = 0.0f;
-	private Random random = new Random();
-	
+		
 	private Paddle paddle;
 	private Ball ball;
 	private Box[] walls = new Box[3];
@@ -128,67 +126,30 @@ public class Breakout extends ApplicationAdapter {
 	}
 
 	private void updateGame() {
-		
+		deltaTime = Gdx.graphics.getDeltaTime();
 		
 		if (blockCount == 0) {
 			prepareNextLevel();
 		}
-		deltaTime = Gdx.graphics.getDeltaTime();
 		
 		processInput();
+		
+		// Check all of the collisions.
+		checkCollisions();
+		
+		// Update the position of all of the game objects in the game.
 		paddle.update(deltaTime);
-		if (!startedPlaying) {
+		// If it's the start of the level we make the ball follow the paddle.
+		if (ballStuckToPaddle) {
 			ball.translate(paddle.getPosition().x - ball.getPosition().x, 0);
 		}
-		
-		for (int i = 0; i < bounds.length; i++) {
-			int j = (i < bounds.length -1) ? i+1 : 0;
-			checkCollisions(bounds[i], bounds[j], deltaTime);	
-		}
-		
-		
-		Point2D[] paddlePoints = paddle.getPoints();
-		for (int i = 0; i < paddlePoints.length - 1; i++) {
-			checkCollisions(paddlePoints[i], paddlePoints[i+1], deltaTime);
-		}
-		
-		for (Block block : blocks) {
-			if (!block.getExploded()) {
-				Point2D[] blockPoints = block.getPoints();
-				
-				for (int i = 0; i < blockPoints.length; i++) {
-					int j = (i < blockPoints.length - 1) ? i+1 : 0;
-					boolean collision = checkCollisions(blockPoints[i], blockPoints[j], deltaTime);
-					if (collision) {
-						block.explode();
-						blockCount--;
-						shakeTimer = Settings.SHAKE_TIMER;
-						SoundManager.POP.play();
-						break;
-					}
-				}	
-			}
-			
-		}
-		
 		ball.update(deltaTime);
-		
-		
 		for (Block block : blocks) {
 			block.update(deltaTime);	
 		}
 		
-		if (shakeTimer > 0) {
-			shakeTimer -= deltaTime;
-			
-			int offsetX = random.nextInt(8) - 4;
-			int offsetY = random.nextInt(8) - 4;
-			
-			GraphicsEnvironment.setWindow(-offsetX, Settings.windowWidth-offsetX, -offsetY, Settings.windowHeight-offsetY);
-		}
-		else {
-			GraphicsEnvironment.setWindow(0, Settings.windowWidth, 0, Settings.windowHeight);
-		}
+		// Shake the screen if needed
+		ScreenShaker.update(deltaTime);
 	}
 	
 	private void clearScreen(Color color) {
@@ -257,9 +218,9 @@ public class Breakout extends ApplicationAdapter {
 		boolean moveLeft = false;
 		boolean moveRight = false;
 		
-		if (!startedPlaying) {
+		if (ballStuckToPaddle) {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-				startedPlaying = true;
+				ballStuckToPaddle = false;
 				ball.setMoving(true);
 			}
 		}
@@ -276,7 +237,7 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	private void prepareNextLevel() {
-		startedPlaying = false;
+		ballStuckToPaddle = true;
 		if (levelIndex == lastLevelIndex) {
 			// TODO: Here we would set state to WON GAME
 			levelIndex = 1;	
@@ -294,7 +255,7 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	private void setupLevelOne() {
-		SoundManager.BREAKOUT.play();
+		//SoundManager.BREAKOUT.play();
 		float originX = ((Settings.windowWidth - (Settings.LEVEL1_COLS * (Settings.BLOCK_WIDTH + Settings.BLOCK_SPACING))) / 2) + (Settings.BLOCK_WIDTH / 2);;
 		float originY = Settings.windowHeight - Settings.LEVEL1_ORIGIN_Y;
 		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
@@ -311,48 +272,35 @@ public class Breakout extends ApplicationAdapter {
 		}
 	}
 	
-	
-	private boolean checkCollisions(Point2D B, Point2D B2, float deltaTime) {
+	private void checkCollisions() {
+		for (int i = 0; i < bounds.length; i++) {
+			int j = (i < bounds.length -1) ? i+1 : 0;
+			ball.checkCollisionWithLine(bounds[i], bounds[j], deltaTime);	
+		}
 		
-		Point2D[] points = ball.getPointsOnBall();
 		
-		Vector2D v = new Vector2D(B2.x-B.x, B2.y-B.y);
-		Vector2D n = new Vector2D(v.y, -v.x);
+		Point2D[] paddlePoints = paddle.getPoints();
+		for (int i = 0; i < paddlePoints.length - 1; i++) {
+			ball.checkCollisionWithLine(paddlePoints[i], paddlePoints[i+1], deltaTime);
+		}
+		
+		for (Block block : blocks) {
+			if (!block.getExploded()) {
+				Point2D[] blockPoints = block.getPoints();
 				
-		Vector2D c = ball.getVelocity();
-		
-		float tHit = Float.MAX_VALUE;
-		
-		Point2D pHit = new Point2D();
-		for (int i = 0; i < points.length; i++) {
-			Point2D A = points[i];
-			
-			float newtHit = Utils.tHit(A, B, n, c);
-			if (newtHit < tHit) {
-				tHit = newtHit;
-				pHit = new Point2D(A.x + tHit * c.x, A.y + tHit * c.y);
+				for (int i = 0; i < blockPoints.length; i++) {
+					int j = (i < blockPoints.length - 1) ? i+1 : 0;
+					boolean collision = ball.checkCollisionWithLine(blockPoints[i], blockPoints[j], deltaTime);
+					if (collision) {
+						block.explode();
+						blockCount--;
+						ScreenShaker.shake(Settings.SHAKE_POWER, Settings.SHAKE_TIMER);
+						//SoundManager.POP.play();
+						break;
+					}
+				}	
 			}
+			
 		}
-		if (pHit.isBetween(B, B2) &&  tHit > 0 && tHit < deltaTime) {
-			Vector2D a = c;
-			pHit.isBetween(B, B2);
-			float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
-			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
-			Vector2D newDirection = new Vector2D(x,y);
-			ball.setDirection(newDirection.normalize());
-			/*
-			System.out.println("------------------------------------------");
-			System.out.println("Thit:      " + tHit);
-			System.out.println("DeltaTime: " + deltaTime);
-			System.out.println("phit:      " + pHit);
-			System.out.println("new direction: " + newDirection.normalize());
-			*/
-			return true;
-		}
-		
-		return false;
 	}
-	
-	
-	
 }

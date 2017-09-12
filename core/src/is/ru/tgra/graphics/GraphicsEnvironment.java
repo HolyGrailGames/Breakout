@@ -36,29 +36,26 @@ public class GraphicsEnvironment {
 	public static void clearModelMatrix()
 	{
 		modelMatrix.loadIdentityMatrix();
+	}
+	public static void setShaderMatrix() {
 		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	public static void setModelMatrixTranslation(float xTranslate, float yTranslate)
 	{
 		modelMatrix.addTranslation(xTranslate, yTranslate, 0.0f);
-		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	public static void setModelMatrixScale(float xScale, float yScale)
 	{
 		modelMatrix.addScale(xScale, yScale, 0.0f);
-		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	public static void setModelMatrixRotationX(float angle)  {
 		modelMatrix.addRotationX(angle);
-		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	public static void setModelMatrixRotationY(float angle)  {
 		modelMatrix.addRotationY(angle);
-		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	public static void setModelMatrixRotationZ(float angle)  {
 		modelMatrix.addRotationZ(angle);
-		modelMatrix.setShaderMatrix(modelMatrixLoc);
 	}
 	
 	public static void setWindow(float left, float right, float bottom, float top) {

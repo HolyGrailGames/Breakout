@@ -2,12 +2,13 @@ package is.ru.tgra.objects;
 
 import com.badlogic.gdx.graphics.Color;
 
-import is.ru.tgra.shapes.Box;
+import is.ru.tgra.graphics.GraphicsEnvironment;
+import is.ru.tgra.shapes.BoxGraphic;
 import is.ru.tgra.utils.Point2D;
 import is.ru.tgra.utils.Settings;
 import is.ru.tgra.utils.Vector2D;
 
-public class Paddle extends Box {
+public class Paddle extends GameObject {
 	private float speed = 500;
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
@@ -33,6 +34,19 @@ public class Paddle extends Box {
 		}
 		
 		restrain();
+	}
+	
+	@Override
+	public void draw() {
+		GraphicsEnvironment.clearModelMatrix();
+		GraphicsEnvironment.setColor(color);
+		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
+		GraphicsEnvironment.setModelMatrixRotationZ(zRotation);
+		GraphicsEnvironment.setModelMatrixRotationY(zRotation);
+		GraphicsEnvironment.setModelMatrixRotationX(zRotation);
+		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
+		GraphicsEnvironment.setShaderMatrix();
+		BoxGraphic.drawSolidBox();
 	}
 	
 	public void setDirection(String direction, boolean flag) {

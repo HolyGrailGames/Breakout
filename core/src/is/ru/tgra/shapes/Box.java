@@ -54,6 +54,7 @@ public class Box extends GameObject {
 		GraphicsEnvironment.setModelMatrixRotationY(zRotation);
 		GraphicsEnvironment.setModelMatrixRotationX(zRotation);
 		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
+		GraphicsEnvironment.setShaderMatrix();
 		BoxGraphic.drawSolidBox();
 	}
 	
