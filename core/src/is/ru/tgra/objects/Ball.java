@@ -38,14 +38,16 @@ public class Ball extends GameObject
 		this.startingPosition = new Point2D(position);
 		this.startingSpeed = speed;
 		
-		initalizePoints();
+		initializePoints();
+		System.out.println(position);
 	}
 	
 	public void reset() {
 		this.direction = new Vector2D(-1, 1);
-		this.position = this.startingPosition;
+		this.position = new Point2D(this.startingPosition);
 		this.speed = this.startingSpeed;
 		this.moving = false;
+		initializePoints();
 		System.out.println(position);
 	}
 
@@ -165,7 +167,7 @@ public class Ball extends GameObject
 		return this.points;
 	}
 	
-	private void initalizePoints() {
+	private void initializePoints() {
 		float deg = 0.0f;
 		for (int i = 0; i < points.length; i++ ) {
 			points[i] = Utils.getPointOnCircle(getPosition(), getRadius(), Utils.degToRad(deg));

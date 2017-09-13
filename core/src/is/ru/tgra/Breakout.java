@@ -266,11 +266,10 @@ public class Breakout extends ApplicationAdapter {
 			scoreboard.decrementLives();
 			
 			// TODO: Fix collisions when doing the following, since they seem to stop working properly.
-			/*
+			
 			ballStuckToPaddle = true;
 			paddle.reset();
 			ball.reset();
-			*/
 		}
 		// Reset entire level
 		else {

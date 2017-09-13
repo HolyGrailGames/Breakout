@@ -18,11 +18,11 @@ public class Paddle extends GameObject {
 	public Paddle(Point2D position, Vector2D scale, Color color) {
 		super(position, scale, 0.0f, color);
 		this.startingPosition = new Point2D(position);
-		initalizePoints();
+		initializePoints();
 	}
 	
 	public void reset() {
-		this.position = this.startingPosition;
+		this.position = new Point2D(this.startingPosition);
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class Paddle extends GameObject {
 		}
 	}
 	
-	private void initalizePoints() {
+	private void initializePoints() {
 		for (int i = 0; i < 4; i++) {
 			points[i] = new Point2D();
 		}
