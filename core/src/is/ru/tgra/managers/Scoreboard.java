@@ -61,7 +61,6 @@ public class Scoreboard {
 	}
 	
 	private void initializeExtraPaddles() {
-		System.out.println("i got called");
 		float offsetX = 0.0f;
 		for (int i = 0; i < lives; i++) {
 			extraPaddles.add(new Box(new Point2D((Settings.windowWidth - Settings.SCOREBOARD_THICKNESS + 55.0f) + offsetX, Settings.windowHeight - 500), new Vector2D(70.0f, 18.0f), Color.RED));

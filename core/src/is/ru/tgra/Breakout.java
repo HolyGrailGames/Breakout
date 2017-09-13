@@ -317,6 +317,5 @@ public class Breakout extends ApplicationAdapter {
 		else {
 			gameState = GameState.GAME_OVER;
 		}
-		
 	}
 }
