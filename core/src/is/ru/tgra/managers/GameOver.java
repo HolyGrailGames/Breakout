@@ -15,10 +15,11 @@ public class GameOver
 	private Color black;
 	private float alphaTimer;
 	private boolean playAgain;
+	
 	public GameOver() {
 		black = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-		gameOverText = new Text("GAME OVER!" , new Point2D((Settings.windowWidth / 2.0f) - 300.0f, Settings.windowHeight / 2.0f), black, 64);
-		playAgainText = new Text("Press Space to play again!" , new Point2D((Settings.windowWidth / 2.0f) - 300.0f, (Settings.windowHeight / 2.0f) - 100.0f), Color.BLACK, 24);
+		gameOverText = new Text("GAME OVER!" , new Point2D((Settings.windowWidth / 2.0f) - 425.0f, Settings.windowHeight / 2.0f), black, 64);
+		playAgainText = new Text("Press Space to play again!" , new Point2D((Settings.windowWidth / 2.0f) - 425.0f, (Settings.windowHeight / 2.0f) - 100.0f), Color.BLACK, 24);
 		alphaTimer = 0.0f;
 		playAgain = false;
 	}
@@ -39,6 +40,11 @@ public class GameOver
 	
 	public boolean getPlayAgain() {
 		return this.playAgain;
+	}
+	
+	public void reset() {
+		alphaTimer = 0.0f;
+		playAgain = false;
 	}
 }
 

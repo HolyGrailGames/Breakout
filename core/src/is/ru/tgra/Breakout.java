@@ -7,7 +7,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.managers.GameOver;
@@ -23,7 +22,6 @@ import is.ru.tgra.shapes.Box;
 import is.ru.tgra.shapes.BoxGraphic;
 import is.ru.tgra.shapes.CircleGraphic;
 import is.ru.tgra.shapes.LineGraphic;
-import is.ru.tgra.shapes.Text;
 import is.ru.tgra.utils.Point2D;
 import is.ru.tgra.utils.Settings;
 import is.ru.tgra.utils.Vector2D;
@@ -62,7 +60,7 @@ public class Breakout extends ApplicationAdapter {
 		CircleGraphic.create();
 		LineGraphic.create();
 		
-		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED, Settings.PADDLE_SPEED);
+		paddle = new Paddle(new Point2D(Settings.windowWidth/2 - 125.0f, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED, Settings.PADDLE_SPEED);
 		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), Settings.BALL_RADIUS, Color.TEAL, Settings.BALL_SPEED);
 		
 		// Bottom left
@@ -84,7 +82,7 @@ public class Breakout extends ApplicationAdapter {
 		scoreboard = new Scoreboard();
 		gameOver = new GameOver();
 
-		setupLevelOne();		
+		prepareNextLevel();		
 	}
 
 	private void updateGame() {
@@ -216,6 +214,12 @@ public class Breakout extends ApplicationAdapter {
 					}
 				}
 				break;
+		case LEVEL_TRANSITION:
+			break;
+		case MAIN_MENU:
+			break;
+		default:
+			break;
 			
 		}
 		
@@ -298,6 +302,7 @@ public class Breakout extends ApplicationAdapter {
 		ball.reset();
 		
 		scoreboard.reset();
+		gameOver.reset();
 	}
 	
 	private void loseLife() {
