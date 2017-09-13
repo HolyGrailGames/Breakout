@@ -9,15 +9,16 @@ import is.ru.tgra.utils.Settings;
 import is.ru.tgra.utils.Vector2D;
 
 public class Paddle extends GameObject {
-	private float speed = 500;
+	private float speed;
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
 	private Point2D[] points = new Point2D[4];
 	private Point2D startingPosition;
 	
-	public Paddle(Point2D position, Vector2D scale, Color color) {
+	public Paddle(Point2D position, Vector2D scale, Color color, float speed) {
 		super(position, scale, 0.0f, color);
 		this.startingPosition = new Point2D(position);
+		this.speed = speed;
 		initializePoints();
 	}
 	
@@ -86,5 +87,12 @@ public class Paddle extends GameObject {
 		points[3].setPosition(position.x + (scale.x/2), position.y - (scale.y/2));
 		
 		return points;
+	}
+	
+	public float getRatioOfPoint(Point2D point) {
+		float paddleLeftBound = position.x-(scale.x/2);
+		float lengthOfPaddle = point.x - paddleLeftBound;
+		float result = lengthOfPaddle / scale.x;
+		return result;
 	}
 }
