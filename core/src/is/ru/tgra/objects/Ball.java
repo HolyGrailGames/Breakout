@@ -18,6 +18,8 @@ public class Ball extends GameObject
 	private float speed;
 	private float radius;
 	
+	private Point2D pHit = new Point2D();
+	
 	private float impactTimer = 0.0f;
 	
 	private Random random = new Random();
@@ -39,7 +41,6 @@ public class Ball extends GameObject
 		this.startingSpeed = speed;
 		
 		initializePoints();
-		System.out.println(position);
 	}
 	
 	public void reset() {
@@ -48,7 +49,6 @@ public class Ball extends GameObject
 		this.speed = this.startingSpeed;
 		this.moving = false;
 		initializePoints();
-		System.out.println(position);
 	}
 
 	@Override
@@ -109,7 +109,6 @@ public class Ball extends GameObject
 		
 		float tHit = Float.MAX_VALUE;
 		
-		Point2D pHit = new Point2D();
 		for (int i = 0; i < points.length; i++) {
 			Point2D A = points[i];
 			
@@ -165,6 +164,10 @@ public class Ball extends GameObject
 	
 	public Point2D[] getPointsOnBall() {
 		return this.points;
+	}
+	
+	public Point2D getPHit() {
+		return this.pHit;
 	}
 	
 	private void initializePoints() {

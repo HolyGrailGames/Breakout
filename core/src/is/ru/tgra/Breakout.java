@@ -62,7 +62,7 @@ public class Breakout extends ApplicationAdapter {
 		CircleGraphic.create();
 		LineGraphic.create();
 		
-		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED);
+		paddle = new Paddle(new Point2D(Settings.windowWidth/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED, Settings.PADDLE_SPEED);
 		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), Settings.BALL_RADIUS, Color.TEAL, Settings.BALL_SPEED);
 		
 		// Bottom left
@@ -250,13 +250,22 @@ public class Breakout extends ApplicationAdapter {
 			if (ball.checkCollisionWithLine(bounds[i], bounds[j], deltaTime) && i == 3 && j == 0) {
 				// We've hit the ground and we lose a life.
 				loseLife();
+				break;
 			}
 		}
 		
-		
 		Point2D[] paddlePoints = paddle.getPoints();
 		for (int i = 0; i < paddlePoints.length - 1; i++) {
-			ball.checkCollisionWithLine(paddlePoints[i], paddlePoints[i+1], deltaTime);
+			if (ball.checkCollisionWithLine(paddlePoints[i], paddlePoints[i+1], deltaTime) && i == 1) {
+				// We've collided with the top of the paddle
+				float ratio = paddle.getRatioOfPoint(ball.getPHit());
+				
+				if (ratio < 0.35 || ratio > 0.65) {
+					ball.setDirection(new Vector2D(ratio*2-1, 1));
+				}
+				
+				break;
+			}
 		}
 		
 		for (Block block : blocks) {
@@ -296,9 +305,6 @@ public class Breakout extends ApplicationAdapter {
 		// Don't reset blocks, just paddle and ball
 		if (scoreboard.getLives() > 0) {
 			scoreboard.decrementLives();
-			
-			// TODO: Fix collisions when doing the following, since they seem to stop working properly.
-			
 			ballStuckToPaddle = true;
 			paddle.reset();
 			ball.reset();
