@@ -304,7 +304,7 @@ private void loseLife() {
 				setupLevelTwo();
 				break;
 		}
-		scoreboard.incrementLevel();
+		scoreboard.setLevelIndex(levelIndex);
 		blockCount = blocks.size();	
 	}
 	

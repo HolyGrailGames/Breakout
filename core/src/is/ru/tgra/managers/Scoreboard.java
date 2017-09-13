@@ -45,10 +45,8 @@ public class Scoreboard {
 		scoreText.setText("Score: " + "\n" + this.score);
 	}
 	
-	public void incrementLevel() {
-		System.out.println("hmm");
-		System.out.println(this.level);
-		this.level++;
+	public void setLevelIndex(int index) {
+		this.level = index;
 		levelText.setText("Level: \n" + this.level);
 	}
 	
