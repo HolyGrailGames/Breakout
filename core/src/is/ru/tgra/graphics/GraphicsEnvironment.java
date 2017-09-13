@@ -88,6 +88,11 @@ public class GraphicsEnvironment {
 		modelMatrix.addRotationZ(angle);
 	}
 	
+	public static void clearScreen(Color color) {
+		Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	}
+	
 	public static void setWindow(float left, float right, float bottom, float top) {
 		float[] pm = new float[16];
 

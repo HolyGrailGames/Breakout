@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
 import is.ru.tgra.graphics.GraphicsEnvironment;
+import is.ru.tgra.managers.GameOver;
 import is.ru.tgra.managers.GameState;
 import is.ru.tgra.managers.LevelCreator;
 import is.ru.tgra.managers.Scoreboard;
@@ -42,6 +43,7 @@ public class Breakout extends ApplicationAdapter {
 	private Box[] walls = new Box[3];
 	private List<Block> blocks = new ArrayList<Block>();
 	private Scoreboard scoreboard;
+	private GameOver gameOver;
 	
 	private Point2D[] bounds = new Point2D[4];
 	
@@ -77,11 +79,12 @@ public class Breakout extends ApplicationAdapter {
 		// Set this variable to the last level
 		lastLevelIndex = 1;
 		
-		setupLevelOne();
-		
 		blockCount = blocks.size();
 		
 		scoreboard = new Scoreboard();
+		gameOver = new GameOver();
+
+		setupLevelOne();		
 	}
 
 	private void updateGame() {
@@ -111,13 +114,10 @@ public class Breakout extends ApplicationAdapter {
 		ScreenShaker.update(deltaTime);
 	}
 	
-	private void clearScreen(Color color) {
-		Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	}
+
 	
 	private void displayGame() {
-		clearScreen(Settings.LIGHT_YELLLOW);
+		GraphicsEnvironment.clearScreen(Settings.LIGHT_YELLLOW);
 		
 		for (Box b : walls) {
 			b.draw();
@@ -130,6 +130,16 @@ public class Breakout extends ApplicationAdapter {
 		}
 		
 		scoreboard.draw();
+	}
+	
+	private void updateGameOver() {
+		processInput();
+	}
+	
+	private void displayGameOver() {
+		
+		displayGame();
+		gameOver.draw (deltaTime);
 	}
 
 	@Override
@@ -147,8 +157,8 @@ public class Breakout extends ApplicationAdapter {
 			break;
 			
 		case GAME_OVER:
-			//updateGameOver();
-			//displayGameOver();
+			updateGameOver();
+			displayGameOver();
 			break;
 		
 		case LEVEL_TRANSITION:
@@ -161,39 +171,55 @@ public class Breakout extends ApplicationAdapter {
 	}
 	
 	private void processInput() {
-		
-		if(Gdx.input.justTouched())
-		{
-			//do mouse/touch input stuff
-			mouseX = Gdx.input.getX();
-			mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+		switch (gameState) {
+			case PLAYING: {
+				if(Gdx.input.justTouched())
+				{
+					//do mouse/touch input stuff
+					mouseX = Gdx.input.getX();
+					mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+					
+					for (Block block : blocks) {
+						if (block.pointIsInside(mouseX, mouseY)) {
+							block.explode();
+							blockCount--;
+						}	
+					}
+				}
+				
+				boolean moveLeft = false;
+				boolean moveRight = false;
+				
+				if (ballStuckToPaddle) {
+					if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+						ballStuckToPaddle = false;
+						ball.setMoving(true);
+					}
+				}
+				
+				if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+					moveLeft = true;
+				}
+				if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+					moveRight = true;
+				}
+				paddle.setDirection(Settings.LEFT, moveLeft);
+				paddle.setDirection(Settings.RIGHT, moveRight);
+				break;
+			}
+			case GAME_OVER:
+				if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+					if (gameOver.getPlayAgain()) {
+						
+						setupLevelOne();
+						gameState = GameState.PLAYING;
+					}
+				}
+				break;
 			
-			for (Block block : blocks) {
-				if (block.pointIsInside(mouseX, mouseY)) {
-					block.explode();
-					blockCount--;
-				}	
-			}
 		}
 		
-		boolean moveLeft = false;
-		boolean moveRight = false;
 		
-		if (ballStuckToPaddle) {
-			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-				ballStuckToPaddle = false;
-				ball.setMoving(true);
-			}
-		}
-		
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			moveLeft = true;
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			moveRight = true;
-		}
-		paddle.setDirection(Settings.LEFT, moveLeft);
-		paddle.setDirection(Settings.RIGHT, moveRight);
 	}
 	
 	private void prepareNextLevel() {
@@ -257,6 +283,12 @@ public class Breakout extends ApplicationAdapter {
 	private void setupLevelOne() {
 		walls = LevelCreator.getLevelOneWalls();
 		blocks = LevelCreator.getLevelOneBlocks();
+		
+		ballStuckToPaddle = true;
+		paddle.reset();
+		ball.reset();
+		
+		scoreboard.reset();
 	}
 	
 	private void loseLife() {
@@ -271,9 +303,8 @@ public class Breakout extends ApplicationAdapter {
 			paddle.reset();
 			ball.reset();
 		}
-		// Reset entire level
 		else {
-			//gameState = GameState.GAME_OVER;
+			gameState = GameState.GAME_OVER;
 		}
 		
 	}

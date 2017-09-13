@@ -40,4 +40,10 @@ public class Scoreboard {
 	public int getLives() {
 		return this.lives;
 	}
+	
+	public void reset() {
+		this.lives = 3;
+		this.score = 0;
+		this.level = 1;
+	}
 }
