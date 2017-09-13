@@ -70,9 +70,9 @@ public class Breakout extends ApplicationAdapter {
 		// Top left
 		bounds[1] = new Point2D(Settings.WALL_THICKNESS, Settings.windowHeight -Settings.WALL_THICKNESS);
 		// Top right
-		bounds[2] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, Settings.windowHeight -Settings.WALL_THICKNESS);
+		bounds[2] = new Point2D(Settings.windowWidth - Settings.SCOREBOARD_THICKNESS, Settings.windowHeight -Settings.WALL_THICKNESS);
 		// Bottom right
-		bounds[3] = new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS, 0);
+		bounds[3] = new Point2D(Settings.windowWidth- Settings.SCOREBOARD_THICKNESS, 0);
 		
 		// Start game at level 1
 		levelIndex = 1;

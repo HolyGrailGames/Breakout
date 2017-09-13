@@ -16,7 +16,7 @@ public class LevelCreator {
 	public static List<Block> getLevelOneBlocks() {
 		List<Block> blocks = new ArrayList<Block>();
 		
-		float originX = ((Settings.windowWidth - (Settings.LEVEL1_COLS * (Settings.BLOCK_WIDTH + Settings.BLOCK_SPACING))) / 2) + (Settings.BLOCK_WIDTH / 2);;
+		float originX = ((Settings.windowWidth - Settings.SCOREBOARD_THICKNESS + Settings.WALL_THICKNESS - (Settings.LEVEL1_COLS * (Settings.BLOCK_WIDTH + Settings.BLOCK_SPACING)) - Settings.BLOCK_SPACING) / 2) + (Settings.BLOCK_WIDTH / 2);
 		float originY = Settings.windowHeight - Settings.LEVEL1_ORIGIN_Y;
 		for (int i = 0; i < Settings.LEVEL1_COLS; i++) {
 			for(int j = 0; j < Settings.LEVEL1_ROWS; j++) {
@@ -43,8 +43,8 @@ public class LevelCreator {
 		walls[1] = new Box(new Point2D(Settings.windowWidth/2, Settings.windowHeight-Settings.WALL_THICKNESS/2), 
 						   new Vector2D(Settings.windowWidth, Settings.WALL_THICKNESS), 0.0f, Settings.LIGHT_GREEN);
 		// Right wall
-		walls[2] = new Box(new Point2D(Settings.windowWidth-Settings.WALL_THICKNESS/2, (Settings.windowHeight-Settings.WALL_THICKNESS)/2), 
-						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
+		walls[2] = new Box(new Point2D(Settings.windowWidth - 125.0f, (Settings.windowHeight-Settings.WALL_THICKNESS)/2), 
+						   new Vector2D(250.0f, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
 		return walls;
 	}
 }

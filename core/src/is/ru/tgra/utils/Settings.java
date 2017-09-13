@@ -21,6 +21,7 @@ public class Settings {
 	public static final Color LIGHT_YELLLOW = new Color(1.0f, 1.0f, 0.785f, 1.0f);
 	
 	public static final float WALL_THICKNESS = 16.0f;
+	public static final float SCOREBOARD_THICKNESS = 250.0f;
 	
 	public static final float PADDLE_SPEED = 700.0f;
 		

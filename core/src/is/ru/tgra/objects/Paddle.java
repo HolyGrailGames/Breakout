@@ -69,8 +69,8 @@ public class Paddle extends GameObject {
 		if (position.x - scale.x/2 < Settings.WALL_THICKNESS) {
 			position.x = scale.x/2 + Settings.WALL_THICKNESS;
 		}
-		else if (position.x + scale.x/2 > Settings.windowWidth - Settings.WALL_THICKNESS) {
-			position.x = Settings.windowWidth - scale.x/2 - Settings.WALL_THICKNESS;
+		else if (position.x + scale.x/2 > Settings.windowWidth - Settings.SCOREBOARD_THICKNESS) {
+			position.x = Settings.windowWidth - scale.x/2 - Settings.SCOREBOARD_THICKNESS;
 		}
 	}
 	
