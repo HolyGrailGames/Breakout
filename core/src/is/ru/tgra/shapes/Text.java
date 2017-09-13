@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
 
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.utils.Point2D;
@@ -11,14 +13,31 @@ import is.ru.tgra.utils.Point2D;
 public class Text {
 	private SpriteBatch batch = new SpriteBatch();
 	//private BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/8bit16.ttf"), false);
-	private BitmapFont font = new BitmapFont();
+	//private BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/Pixel-Miners.otf"), false);
+	private BitmapFont font;
 	private String text;
 	private Point2D position;
 	
+	
+	
+	
 	public Text(String text, Point2D position, Color color) {
-		font.setColor(color);
+		//font.setColor(color);
 		this.text = text;
 		this.position = position;
+	
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/8Bit16.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter(); // font size 12 pixels
+		
+		
+		parameter.size = 24;
+		//parameter.borderWidth = 1;
+		parameter.color = Color.BLACK;
+		//parameter.shadowOffsetX = 3;
+		//parameter.shadowOffsetY = 3;
+		//parameter.shadowColor = Color.YELLOW;
+		font = generator.generateFont(parameter);
+		generator.dispose();
 	}
 
 	public void draw() {

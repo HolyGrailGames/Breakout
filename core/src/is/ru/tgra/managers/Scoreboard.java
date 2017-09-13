@@ -17,8 +17,8 @@ public class Scoreboard {
 	
 	public Scoreboard() {
 		livesText = new Text("Lives Left: " + lives, new Point2D(10.0f, Settings.windowHeight - 10.0f), Color.BLACK);
-		scoreText = new Text("Score: " + score, new Point2D(Settings.windowWidth/2, Settings.windowHeight-10.0f), Color.BLACK);
-		levelText = new Text("Level: " + level, new Point2D(Settings.windowWidth-100.0f, Settings.windowHeight-10.0f), Color.BLACK);
+		scoreText = new Text("Score: " + score, new Point2D(Settings.windowWidth/2 - 50.0f, Settings.windowHeight-10.0f), Color.BLACK);
+		levelText = new Text("Level: " + level, new Point2D(Settings.windowWidth-180.0f, Settings.windowHeight-10.0f), Color.BLACK);
 	}
 	
 	public void draw() {
