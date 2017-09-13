@@ -4,9 +4,13 @@ import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.BufferUtils;
 
 public class GraphicsEnvironment {
+	public static int renderingProgramID;
+	private static int vertexShaderID;
+	private static int fragmentShaderID;
 	public static int modelMatrixLoc;
 	public static int positionLoc;
 	
@@ -22,7 +26,31 @@ public class GraphicsEnvironment {
 	 */
 	private GraphicsEnvironment() {}
 	
-	public static void create(int renderingProgramID) {
+	public static void create() {
+		String vertexShaderString;
+		String fragmentShaderString;
+
+		vertexShaderString = Gdx.files.internal("shaders/simple2D.vert").readString();
+		fragmentShaderString =  Gdx.files.internal("shaders/simple2D.frag").readString();
+
+		vertexShaderID = Gdx.gl.glCreateShader(GL20.GL_VERTEX_SHADER);
+		fragmentShaderID = Gdx.gl.glCreateShader(GL20.GL_FRAGMENT_SHADER);
+	
+		Gdx.gl.glShaderSource(vertexShaderID, vertexShaderString);
+		Gdx.gl.glShaderSource(fragmentShaderID, fragmentShaderString);
+	
+		Gdx.gl.glCompileShader(vertexShaderID);
+		Gdx.gl.glCompileShader(fragmentShaderID);
+
+		renderingProgramID = Gdx.gl.glCreateProgram();
+	
+		Gdx.gl.glAttachShader(renderingProgramID, vertexShaderID);
+		Gdx.gl.glAttachShader(renderingProgramID, fragmentShaderID);
+	
+		Gdx.gl.glLinkProgram(renderingProgramID);
+
+		Gdx.gl.glUseProgram(renderingProgramID);
+		
 		modelMatrixLoc = Gdx.gl.glGetUniformLocation(renderingProgramID, "u_modelMatrix");
 		projectionMatrixLoc	= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_projectionMatrix");
 		colorLoc = Gdx.gl.glGetUniformLocation(renderingProgramID, "u_color");
@@ -31,6 +59,8 @@ public class GraphicsEnvironment {
 		Gdx.gl.glEnableVertexAttribArray(positionLoc);
 		
 		modelMatrix = new ModelMatrix();
+		
+		setWindow(0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight());
 	}
 	
 	public static void clearModelMatrix()

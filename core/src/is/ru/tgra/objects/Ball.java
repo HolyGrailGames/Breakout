@@ -24,16 +24,29 @@ public class Ball extends GameObject
 	private int[] directions = {-1, 1};
 	private Point2D[] points = new Point2D[8];
 	
+	private Point2D startingPosition;
+	private float startingSpeed;
+	
 	public Ball(Point2D position, float radius, Color color, float speed)
 	{
 		super(position, new Vector2D(radius, radius), 0, color);
-		direction = new Vector2D(-1, 1);
+		this.direction = new Vector2D(-1, 1);
 		this.speed = speed;
 		this.radius = radius;
-		moving = false;
+		this.moving = false;
 		
+		this.startingPosition = new Point2D(position);
+		this.startingSpeed = speed;
 		
 		initalizePoints();
+	}
+	
+	public void reset() {
+		this.direction = new Vector2D(-1, 1);
+		this.position = this.startingPosition;
+		this.speed = this.startingSpeed;
+		this.moving = false;
+		System.out.println(position);
 	}
 
 	@Override
@@ -64,8 +77,8 @@ public class Ball extends GameObject
 		
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
 		if (impactTimer > 0) {
-			GraphicsEnvironment.setColor(Color.BLACK);
-			GraphicsEnvironment.setModelMatrixScale(scale.x*1.5f, scale.y*1.5f);
+			GraphicsEnvironment.setColor(Color.GREEN);
+			GraphicsEnvironment.setModelMatrixScale(scale.x*2f, scale.y*2f);
 		}
 		else {
 			GraphicsEnvironment.setColor(color);
@@ -125,7 +138,7 @@ public class Ball extends GameObject
 	}
 	
 	public void impact() {
-		impactTimer = 0.15f;
+		impactTimer = 0.1f;
 	}
 	
 	public void setMoving(boolean moving) {

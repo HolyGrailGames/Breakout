@@ -12,6 +12,10 @@ public class Point2D {
 		this.y = y;
 	}
 	
+	public Point2D(Point2D aPoint) {
+		this(aPoint.x, aPoint.y);
+	}
+	
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
