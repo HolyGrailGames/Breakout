@@ -11,31 +11,21 @@ import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.utils.Point2D;
 
 public class Text {
-	private SpriteBatch batch = new SpriteBatch();
-	//private BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/8bit16.ttf"), false);
-	//private BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/Pixel-Miners.otf"), false);
+	private SpriteBatch batch;
 	private BitmapFont font;
 	private String text;
 	private Point2D position;
 	
-	
-	
-	
-	public Text(String text, Point2D position, Color color) {
-		//font.setColor(color);
+	public Text(String text, Point2D position, Color color, int fontSize) {
 		this.text = text;
 		this.position = position;
+		batch = new SpriteBatch();
 	
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/8Bit16.ttf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter(); // font size 12 pixels
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/game_boy.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		
-		
-		parameter.size = 24;
-		//parameter.borderWidth = 1;
+		parameter.size = fontSize;
 		parameter.color = Color.BLACK;
-		//parameter.shadowOffsetX = 3;
-		//parameter.shadowOffsetY = 3;
-		//parameter.shadowColor = Color.YELLOW;
 		font = generator.generateFont(parameter);
 		generator.dispose();
 	}
