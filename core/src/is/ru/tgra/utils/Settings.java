@@ -20,6 +20,7 @@ public class Settings {
 	public static final Color YELLOW = new Color(1.0f, 1.0f, 0.0f, 1.0f);
 	public static final Color LIGHT_YELLLOW = new Color(1.0f, 1.0f, 0.785f, 1.0f);
 	
+	
 	public static final float WALL_THICKNESS = 16.0f;
 	public static final float SCOREBOARD_THICKNESS = 250.0f;
 	
@@ -50,8 +51,6 @@ public class Settings {
 	public static final int LEVEL1_COLS = 10;
 	
 	public static final float LEVEL2_ORIGIN_Y = 110.0f;
-	public static final int LEVEL2_ROWS = 2;
-	public static final int LEVEL2_COLS = 10;
 	
 	/**
 	 * Private constructor to prevent anyone from creating an instance of this class.

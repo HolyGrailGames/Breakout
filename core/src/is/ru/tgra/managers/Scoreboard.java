@@ -20,7 +20,7 @@ public class Scoreboard {
 	
 	private int lives = 3;
 	private int score = 0;
-	private int level = 1;
+	private int level = 0;
 	
 	public Scoreboard() {
 		//livesText = new Text("Lives Left: " + lives, new Point2D(10.0f, Settings.windowHeight - 10.0f), Color.BLACK, 24);
@@ -45,6 +45,13 @@ public class Scoreboard {
 		scoreText.setText("Score: " + "\n" + this.score);
 	}
 	
+	public void incrementLevel() {
+		System.out.println("hmm");
+		System.out.println(this.level);
+		this.level++;
+		levelText.setText("Level: \n" + this.level);
+	}
+	
 	public void decrementLives() {
 		extraPaddles.remove(extraPaddles.size() - 1);
 		this.lives--;
@@ -57,7 +64,7 @@ public class Scoreboard {
 	public void init() {
 		this.lives = 3;
 		this.score = 0;
-		this.level = 1;
+		this.level = 0;
 		initializeExtraPaddles();
 	}
 	

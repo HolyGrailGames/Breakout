@@ -42,7 +42,6 @@ public class Breakout extends ApplicationAdapter {
 	private List<Block> blocks = new ArrayList<Block>();
 	private Scoreboard scoreboard;
 	private GameOver gameOver;
-	
 	private Point2D[] bounds = new Point2D[4];
 	
 	private float mouseX;
@@ -71,14 +70,15 @@ public class Breakout extends ApplicationAdapter {
 		bounds[2] = new Point2D(Settings.windowWidth - Settings.SCOREBOARD_THICKNESS, Settings.windowHeight -Settings.WALL_THICKNESS);
 		// Bottom right
 		bounds[3] = new Point2D(Settings.windowWidth- Settings.SCOREBOARD_THICKNESS, 0);
-		
+
 		
 		blockCount = blocks.size();
 		
 		scoreboard = new Scoreboard();
 		gameOver = new GameOver();
 
-		// prepareNextLevel increments this when preparing each level
+		// prepareNextLevel increments this when preparing each level, set to 0 to start 
+		// at level 1, because real computer scientists always start counting from 0?!
 		levelIndex = 0;
 		// Set this variable to equal the index of the last level
 		lastLevelIndex = 2;
@@ -223,11 +223,7 @@ public class Breakout extends ApplicationAdapter {
 			break;
 			
 		}
-		
-		
 	}
-	
-
 	
 	private void checkCollisions() {
 		for (int i = 0; i < bounds.length; i++) {
@@ -308,7 +304,7 @@ private void loseLife() {
 				setupLevelTwo();
 				break;
 		}
-		
+		scoreboard.incrementLevel();
 		blockCount = blocks.size();	
 	}
 	
