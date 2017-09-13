@@ -72,16 +72,16 @@ public class Breakout extends ApplicationAdapter {
 		// Bottom right
 		bounds[3] = new Point2D(Settings.windowWidth- Settings.SCOREBOARD_THICKNESS, 0);
 		
-		// Start game at level 1
-		levelIndex = 1;
-		// Set this variable to the last level
-		lastLevelIndex = 1;
 		
 		blockCount = blocks.size();
 		
 		scoreboard = new Scoreboard();
 		gameOver = new GameOver();
 
+		// prepareNextLevel increments this when preparing each level
+		levelIndex = 0;
+		// Set this variable to equal the index of the last level
+		lastLevelIndex = 2;
 		prepareNextLevel();		
 	}
 
@@ -208,8 +208,9 @@ public class Breakout extends ApplicationAdapter {
 			case GAME_OVER:
 				if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 					if (gameOver.getPlayAgain()) {
-						
-						setupLevelOne();
+						scoreboard.init();
+						levelIndex = 0;
+						prepareNextLevel();
 						gameState = GameState.PLAYING;
 					}
 				}
@@ -226,27 +227,7 @@ public class Breakout extends ApplicationAdapter {
 		
 	}
 	
-	private void prepareNextLevel() {
-		ballStuckToPaddle = true;
-		
-		if (levelIndex == lastLevelIndex) {
-			// TODO: Here we would set state to WON GAME
-			levelIndex = 1;	
-		} else {
-			levelIndex++;
-		}
-		
-		blocks.clear();
-		
-		
-		switch(levelIndex) {
-			case 1:
-				setupLevelOne();
-				break;
-		}
-		
-		blockCount = blocks.size();	
-	}
+
 	
 	private void checkCollisions() {
 		for (int i = 0; i < bounds.length; i++) {
@@ -293,20 +274,7 @@ public class Breakout extends ApplicationAdapter {
 		}
 	}
 	
-	private void setupLevelOne() {
-		walls = LevelCreator.getLevelOneWalls();
-		blocks = LevelCreator.getLevelOneBlocks();
-		
-		ballStuckToPaddle = true;
-		paddle.reset();
-		ball.reset();
-		
-		scoreboard.reset();
-		gameOver.reset();
-	}
-	
-	private void loseLife() {
-		
+private void loseLife() {
 		// Don't reset blocks, just paddle and ball
 		if (scoreboard.getLives() > 0) {
 			scoreboard.decrementLives();
@@ -318,4 +286,51 @@ public class Breakout extends ApplicationAdapter {
 			gameState = GameState.GAME_OVER;
 		}
 	}
+
+	private void prepareNextLevel() {
+		ballStuckToPaddle = true;
+		
+		if (levelIndex == lastLevelIndex) {
+			// TODO: Here we would set state to WON GAME
+			levelIndex = 1;	
+		} else {
+			levelIndex++;
+		}
+		
+		blocks.clear();
+		
+		
+		switch(levelIndex) {
+			case 1:
+				setupLevelOne();
+				break;
+			case 2:
+				setupLevelTwo();
+				break;
+		}
+		
+		blockCount = blocks.size();	
+	}
+	
+	private void reset() {
+		ballStuckToPaddle = true;
+		paddle.reset();
+		ball.reset();
+		
+		gameOver.reset();
+	}
+	
+	private void setupLevelOne() {
+		walls = LevelCreator.getLevelOneWalls();
+		blocks = LevelCreator.getLevelOneBlocks();
+		reset();
+	}
+	
+	private void setupLevelTwo() {
+		walls = LevelCreator.getLevelTwoWalls();
+		blocks = LevelCreator.getLevelTwoBlocks();
+		reset();
+	}
+	
+
 }

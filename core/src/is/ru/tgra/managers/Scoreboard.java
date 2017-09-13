@@ -27,6 +27,7 @@ public class Scoreboard {
 		scoreText = new Text("Score: \n" + score, new Point2D(Settings.windowWidth - 200.0f, Settings.windowHeight-50.0f), Color.BLACK, 24);
 		levelText = new Text("Level: \n" + level, new Point2D(Settings.windowWidth - 200.0f, Settings.windowHeight-200.0f), Color.BLACK, 24);
 		extraPaddles = new ArrayList<Box>();
+		init();
 	}
 	
 	public void draw() {
@@ -53,7 +54,7 @@ public class Scoreboard {
 		return this.lives;
 	}
 	
-	public void reset() {
+	public void init() {
 		this.lives = 3;
 		this.score = 0;
 		this.level = 1;

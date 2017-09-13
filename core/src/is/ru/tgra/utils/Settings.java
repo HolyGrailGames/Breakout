@@ -31,7 +31,7 @@ public class Settings {
 	
 	public static final float BALL_SPEED = 500.0f;
 	public static final float BALL_RADIUS = 10.0f;
-	public static final float BALL_ACCELERATION = 20.0f;
+	public static final float BALL_ACCELERATION = 5.0f;
 	public static final float BALL_MAX_SPEED = 1500.0f;
 	
 	public static final int   SHAKE_POWER = 8;
@@ -48,6 +48,10 @@ public class Settings {
 	public static final float LEVEL1_ORIGIN_Y = 110.0f;
 	public static final int LEVEL1_ROWS = 8;
 	public static final int LEVEL1_COLS = 10;
+	
+	public static final float LEVEL2_ORIGIN_Y = 110.0f;
+	public static final int LEVEL2_ROWS = 2;
+	public static final int LEVEL2_COLS = 10;
 	
 	/**
 	 * Private constructor to prevent anyone from creating an instance of this class.
