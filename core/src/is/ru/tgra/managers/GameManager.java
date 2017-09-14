@@ -164,6 +164,9 @@ public class GameManager {
 				if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 					moveRight = true;
 				}
+				if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+					clearLevel();
+				}
 				paddle.setDirection(Settings.LEFT, moveLeft);
 				paddle.setDirection(Settings.RIGHT, moveRight);
 				break;
@@ -211,6 +214,14 @@ public class GameManager {
 		ScreenShaker.update(deltaTime);
 	}
 	
+	public static void clearLevel() {
+		for (Block block : blocks) {
+			block.explode();
+			blockCount--;
+		}
+		
+		prepareNextLevel();
+	}
 
 	
 	public static void displayGame() {
