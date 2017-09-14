@@ -68,7 +68,7 @@ public class GameManager {
 
 		// prepareNextLevel increments this when preparing each level, set to 0 to start 
 		// at level 1, because real computer scientists always start counting from 0?!
-		levelIndex = 2;
+		levelIndex = 1;
 		// Set this variable to equal the index of the last level
 		lastLevelIndex = 3;
 		prepareNextLevel();
