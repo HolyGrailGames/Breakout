@@ -23,6 +23,7 @@ public class Paddle extends GameObject {
 	}
 	
 	public void reset() {
+		
 		this.position = new Point2D(this.startingPosition);
 	}
 	

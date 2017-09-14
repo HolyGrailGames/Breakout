@@ -68,7 +68,7 @@ public class GameManager {
 
 		// prepareNextLevel increments this when preparing each level, set to 0 to start 
 		// at level 1, because real computer scientists always start counting from 0?!
-		levelIndex = 0;
+		levelIndex = 2;
 		// Set this variable to equal the index of the last level
 		lastLevelIndex = 3;
 		prepareNextLevel();
@@ -91,7 +91,6 @@ public class GameManager {
 		ballStuckToPaddle = true;
 		
 		if (levelIndex == lastLevelIndex) {
-			// TODO: Here we would set state to WON GAME
 			levelIndex = 1;	
 		} else {
 			levelIndex++;
@@ -146,20 +145,6 @@ public class GameManager {
 	public static void processInput() {
 		switch (gameState) {
 			case PLAYING: {
-				if(Gdx.input.justTouched())
-				{
-					//do mouse/touch input stuff
-					mouseX = Gdx.input.getX();
-					mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-					
-					for (Block block : blocks) {
-						if (block.pointIsInside(mouseX, mouseY)) {
-							block.explode();
-							blockCount--;
-						}	
-					}
-				}
-				
 				boolean moveLeft = false;
 				boolean moveRight = false;
 				

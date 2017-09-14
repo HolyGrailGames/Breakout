@@ -38,7 +38,6 @@ public class Collisions {
 			if (tHit > 0.0f && i == 1) {
 				// We've collided with the top of the paddle
 				float ratio = GameManager.paddle.getRatioOfPoint(pHit);
-				System.out.println(ratio);
 				if (ratio < 0.35 || ratio > 0.65) {
 					//System.out.println(new Vector2D(ratio*2-1, 1));
 					ball.setDirection(new Vector2D(ratio*2-1, 1));
@@ -63,7 +62,7 @@ public class Collisions {
 						GameManager.blockCount--;
 						ScreenShaker.shake(Settings.SHAKE_POWER, Settings.SHAKE_TIMER);
 						GameManager.scoreboard.addToScore(500);
-						//SoundManager.POP.play();
+						SoundManager.POP.play();
 						
 						// Recursively check if collision in rest of frame time.
 						checkCollisions(ball, timeRemaining - tHit);

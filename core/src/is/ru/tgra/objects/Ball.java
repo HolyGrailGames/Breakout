@@ -4,9 +4,9 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 
-import is.ru.tgra.Breakout;
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.managers.Collisions;
+import is.ru.tgra.shapes.BoxGraphic;
 import is.ru.tgra.shapes.CircleGraphic;
 import is.ru.tgra.utils.Point2D;
 import is.ru.tgra.utils.Settings;
@@ -25,7 +25,6 @@ public class Ball extends GameObject
 	private float impactTimer = 0.0f;
 	
 	private Random random = new Random();
-	private int[] directions = {-1, 1};
 	private Point2D[] points = new Point2D[8];
 	
 	private Point2D startingPosition;
@@ -36,7 +35,7 @@ public class Ball extends GameObject
 	public Ball(Point2D position, float radius, Color color, float speed)
 	{
 		super(position, new Vector2D(radius, radius), 0, color);
-		this.direction = new Vector2D(-1, 1);
+		this.direction = new Vector2D((random.nextInt(2) * 2) - 1, 1);
 		this.speed = speed;
 		this.radius = radius;
 		this.moving = false;
@@ -48,10 +47,11 @@ public class Ball extends GameObject
 	}
 	
 	public void reset() {
-		this.direction = new Vector2D(-1, 1);
+		this.direction = new Vector2D((random.nextInt(2) * 2) - 1, 1);
 		this.position = new Point2D(this.startingPosition);
 		this.speed = this.startingSpeed;
 		this.moving = false;
+		this.impactTimer = 0.0f;
 		initializePoints();
 	}
 
@@ -69,12 +69,13 @@ public class Ball extends GameObject
 			Collisions.checkCollisions(this, timeLeftToMove);
 			
 			move(timeLeftToMove);
-			/*if (speed < Settings.BALL_MAX_SPEED) {
+			// Accelerate the ball gradually over time, up to a certain threshold
+			if (speed < Settings.BALL_MAX_SPEED) {
 				speed += Settings.BALL_ACCELERATION * deltaTime;
 			}
 			else if (speed > Settings.BALL_MAX_SPEED) {
 				speed = Settings.BALL_MAX_SPEED;
-			}*/
+			}
 			
 		}
 	}
@@ -93,7 +94,6 @@ public class Ball extends GameObject
 	public void draw()
 	{
 		GraphicsEnvironment.clearModelMatrix();
-		
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
 
 		if (impactTimer > 0) {
@@ -107,7 +107,7 @@ public class Ball extends GameObject
 		
 		GraphicsEnvironment.setShaderMatrix();
 		CircleGraphic.drawSolidCircle();
-		
+			
 		// Draw points on ball for debug purposes.
 		/*
 		for (Point2D point : points) {
@@ -119,7 +119,6 @@ public class Ball extends GameObject
 			CircleGraphic.drawSolidCircle();
 		}
 		*/
-		
 	}
 	
 	@Override
