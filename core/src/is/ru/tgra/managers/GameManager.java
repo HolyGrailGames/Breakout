@@ -70,7 +70,7 @@ public class GameManager {
 		// at level 1, because real computer scientists always start counting from 0?!
 		levelIndex = 0;
 		// Set this variable to equal the index of the last level
-		lastLevelIndex = 2;
+		lastLevelIndex = 3;
 		prepareNextLevel();
 	}
 	
@@ -107,7 +107,15 @@ public class GameManager {
 			case 2:
 				setupLevelTwo();
 				break;
+			case 3:
+				setupLevelThree();
+				break;
+			default:
+				setupLevelOne();
+				break;
 		}
+		
+		reset();
 		scoreboard.setLevelIndex(levelIndex);
 		blockCount = blocks.size();	
 	}
@@ -123,13 +131,16 @@ public class GameManager {
 	private static void setupLevelOne() {
 		walls = LevelCreator.getLevelOneWalls();
 		blocks = LevelCreator.getLevelOneBlocks();
-		reset();
 	}
 	
 	private static void setupLevelTwo() {
 		walls = LevelCreator.getLevelTwoWalls();
 		blocks = LevelCreator.getLevelTwoBlocks();
-		reset();
+	}
+	
+	private static void setupLevelThree() {
+		walls = LevelCreator.getLevelThreeWalls();
+		blocks = LevelCreator.getLevelThreeBlocks();
 	}
 	
 	public static void processInput() {

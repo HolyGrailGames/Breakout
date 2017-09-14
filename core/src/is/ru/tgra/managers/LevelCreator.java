@@ -165,4 +165,113 @@ public class LevelCreator {
 						   new Vector2D(250.0f, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
 		return walls;
 	}
+	
+	public static Box[] getLevelThreeWalls() {
+		Box[] walls = new Box[3];
+		// Left wall
+		walls[0] = new Box(new Point2D(Settings.WALL_THICKNESS/2, (Settings.windowHeight-Settings.WALL_THICKNESS)/2), 
+						   new Vector2D(Settings.WALL_THICKNESS, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
+		// Top wall
+		walls[1] = new Box(new Point2D(Settings.windowWidth/2, Settings.windowHeight-Settings.WALL_THICKNESS/2), 
+						   new Vector2D(Settings.windowWidth, Settings.WALL_THICKNESS), 0.0f, Settings.LIGHT_GREEN);
+		// Right wall
+		walls[2] = new Box(new Point2D(Settings.windowWidth - 125.0f, (Settings.windowHeight-Settings.WALL_THICKNESS)/2), 
+						   new Vector2D(250.0f, Settings.windowHeight), 0.0f, Settings.LIGHT_GREEN);
+		return walls;
+	}
+	
+	public static List<Block> getLevelThreeBlocks() {
+		List<Block> blocks = new ArrayList<Block>();
+		
+		float originX = ((Settings.windowWidth - Settings.SCOREBOARD_THICKNESS + Settings.WALL_THICKNESS - (Settings.LEVEL1_COLS * (Settings.BLOCK_WIDTH + Settings.BLOCK_SPACING)) - Settings.BLOCK_SPACING) / 2) + (Settings.BLOCK_WIDTH / 2);
+		float originY = Settings.windowHeight - Settings.LEVEL2_ORIGIN_Y;
+		
+		// Top row
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+	
+		// 2nd row
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		
+		// 3rd row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		
+		// 4th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+	
+		// 5th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.BLUE, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.BLUE, 5));
+		
+		// 6th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.WHITE, 5));
+		
+		// 7th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+	
+		// 8th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		
+		// 9th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 8 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 3 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 8 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 8 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 8 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 6 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 8 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 8 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+	
+		// 10th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 9 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 9 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 9 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 9 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		
+		// 11th row
+
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 10 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 10 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 10 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 10 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		
+		// 12th row
+		blocks.add(new Block(new Point2D(originX + 2 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 11 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 4 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 11 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 5 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 11 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		blocks.add(new Block(new Point2D(originX + 7 * (Settings.BLOCK_SPACING + Settings.BLOCK_WIDTH), originY - 11 * (Settings.BLOCK_SPACING + Settings.BLOCK_HEIGHT)), new Vector2D(Settings.BLOCK_WIDTH, Settings.BLOCK_HEIGHT), Color.FIREBRICK, 5));
+		
+		
+		return blocks;
+	}
 }
