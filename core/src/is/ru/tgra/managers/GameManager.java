@@ -28,6 +28,7 @@ public class GameManager {
 	public static boolean ballStuckToPaddle = true;
 	public static int levelIndex;
 	public static int lastLevelIndex;
+	public static int worldIndex;
 	public static int blockCount;
 	
 	public static Paddle paddle;
@@ -68,9 +69,11 @@ public class GameManager {
 
 		// prepareNextLevel increments this when preparing each level, set to 0 to start 
 		// at level 1, because real computer scientists always start counting from 0?!
-		levelIndex = 1;
+		levelIndex = 0;
 		// Set this variable to equal the index of the last level
 		lastLevelIndex = 3;
+		// 
+		worldIndex = 1;
 		prepareNextLevel();
 	}
 	
@@ -79,8 +82,7 @@ public class GameManager {
 		if (scoreboard.getLives() > 0) {
 			scoreboard.decrementLives();
 			ballStuckToPaddle = true;
-			paddle.reset();
-			ball.reset();
+			reset();
 		}
 		else {
 			gameState = GameState.GAME_OVER;
@@ -92,12 +94,12 @@ public class GameManager {
 		
 		if (levelIndex == lastLevelIndex) {
 			levelIndex = 1;	
+			worldIndex++;
 		} else {
 			levelIndex++;
 		}
 		
 		blocks.clear();
-		
 		
 		switch(levelIndex) {
 			case 1:
@@ -115,6 +117,7 @@ public class GameManager {
 		}
 		
 		reset();
+		scoreboard.setWorldIndex(worldIndex);
 		scoreboard.setLevelIndex(levelIndex);
 		blockCount = blocks.size();	
 	}

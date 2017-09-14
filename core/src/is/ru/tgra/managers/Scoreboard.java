@@ -21,6 +21,7 @@ public class Scoreboard {
 	private int lives = 3;
 	private int score = 0;
 	private int level = 0;
+	private int worldLevel = 1;
 	
 	public Scoreboard() {
 		//livesText = new Text("Lives Left: " + lives, new Point2D(10.0f, Settings.windowHeight - 10.0f), Color.BLACK, 24);
@@ -47,7 +48,11 @@ public class Scoreboard {
 	
 	public void setLevelIndex(int index) {
 		this.level = index;
-		levelText.setText("Level: \n" + this.level);
+		levelText.setText("Level: \n" + this.worldLevel + "-" + this.level);
+	}
+	
+	public void setWorldIndex(int index) {
+		this.worldLevel = index;
 	}
 	
 	public void decrementLives() {
