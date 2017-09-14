@@ -94,6 +94,8 @@ public class Breakout extends ApplicationAdapter {
 		
 		processInput();
 		
+		ball.setTimeLeftToMove(deltaTime);
+		
 		// Check all of the collisions.
 		checkCollisions();
 		

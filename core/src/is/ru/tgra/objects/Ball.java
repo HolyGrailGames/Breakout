@@ -29,6 +29,8 @@ public class Ball extends GameObject
 	private Point2D startingPosition;
 	private float startingSpeed;
 	
+	private float timeLeftToMove;
+	
 	public Ball(Point2D position, float radius, Color color, float speed)
 	{
 		super(position, new Vector2D(radius, radius), 0, color);
@@ -59,17 +61,21 @@ public class Ball extends GameObject
 		}
 		
 		if (moving) {
-			float dx = direction.x * speed * deltaTime;
-			float dy = direction.y * speed * deltaTime;
-			translate(dx, dy);
-			if (speed < Settings.BALL_MAX_SPEED) {
+			move(timeLeftToMove);
+			/*if (speed < Settings.BALL_MAX_SPEED) {
 				speed += Settings.BALL_ACCELERATION * deltaTime;
 			}
 			else if (speed > Settings.BALL_MAX_SPEED) {
 				speed = Settings.BALL_MAX_SPEED;
-			}
+			}*/
 			
 		}
+	}
+	
+	private void move(float time) {
+		float dx = direction.x * speed * time;
+		float dy = direction.y * speed * time;
+		translate(dx, dy);
 	}
 
 	@Override
@@ -78,6 +84,7 @@ public class Ball extends GameObject
 		GraphicsEnvironment.clearModelMatrix();
 		
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
+		/*
 		if (impactTimer > 0) {
 			GraphicsEnvironment.setColor(Color.GREEN);
 			GraphicsEnvironment.setModelMatrixScale(scale.x*2f, scale.y*2f);
@@ -86,8 +93,22 @@ public class Ball extends GameObject
 			GraphicsEnvironment.setColor(color);
 			GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);			
 		}
+		*/
+		GraphicsEnvironment.setColor(color);
+		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
+		
 		GraphicsEnvironment.setShaderMatrix();
 		CircleGraphic.drawSolidCircle();
+		/*
+		for (Point2D point : points) {
+			GraphicsEnvironment.clearModelMatrix();
+			GraphicsEnvironment.setModelMatrixTranslation(point.x, point.y);
+			GraphicsEnvironment.setColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1.0f));
+			GraphicsEnvironment.setModelMatrixScale(5, 5);
+			GraphicsEnvironment.setShaderMatrix();
+			CircleGraphic.drawSolidCircle();
+		}
+		*/
 	}
 	
 	@Override
@@ -96,6 +117,10 @@ public class Ball extends GameObject
 		for (Point2D point : points) {
 			point.translate(dx, dy);
 		}
+	}
+	
+	public void setTimeLeftToMove(float time) {
+		this.timeLeftToMove = time;
 	}
 	
 	public boolean checkCollisionWithLine(Point2D B, Point2D B2, float deltaTime) {
@@ -109,22 +134,32 @@ public class Ball extends GameObject
 		
 		float tHit = Float.MAX_VALUE;
 		
+		boolean collision = false;
+		
 		for (int i = 0; i < points.length; i++) {
 			Point2D A = points[i];
 			
 			float newtHit = Utils.tHit(A, B, n, c);
-			if (newtHit < tHit) {
-				tHit = newtHit;
-				pHit = new Point2D(A.x + tHit * c.x, A.y + tHit * c.y);
+			if (newtHit > 0 && newtHit < deltaTime) {
+				Point2D newpHit = new Point2D(A.x + newtHit * c.x, A.y + newtHit * c.y);
+				if (newpHit.isBetween(B, B2)) {
+					if (newtHit < tHit) {
+						tHit = newtHit;
+						pHit = newpHit;
+						collision = true;
+					}
+				}
 			}
 		}
-		if (pHit.isBetween(B, B2) &&  tHit > 0 && tHit < deltaTime) {
+		
+		if (collision) {
 			Vector2D a = c;
-			pHit.isBetween(B, B2);
 			float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
 			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
 			Vector2D newDirection = new Vector2D(x,y);
 			setDirection(newDirection.normalize());
+			move(tHit*0.999f);
+			timeLeftToMove -= tHit;
 			/*
 			System.out.println("------------------------------------------");
 			System.out.println("Thit:      " + tHit);
