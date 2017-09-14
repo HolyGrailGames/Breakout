@@ -12,7 +12,9 @@ public class Collisions {
 	public static void checkCollisions(Ball ball, float timeRemaining) {
 		float tHit = Float.MAX_VALUE;
 		// Base case.
+		
 		if (timeRemaining <= 0) {
+			
 			return;
 		}
 		
@@ -39,7 +41,6 @@ public class Collisions {
 				// We've collided with the top of the paddle
 				float ratio = GameManager.paddle.getRatioOfPoint(pHit);
 				if (ratio < 0.35 || ratio > 0.65) {
-					//System.out.println(new Vector2D(ratio*2-1, 1));
 					ball.setDirection(new Vector2D(ratio*2-1, 1));
 				}
 				

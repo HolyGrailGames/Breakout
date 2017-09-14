@@ -48,7 +48,7 @@ public class Ball extends GameObject
 	
 	public void reset() {
 		this.direction = new Vector2D((random.nextInt(2) * 2) - 1, 1);
-		this.position = new Point2D(this.startingPosition);
+		this.position = new Point2D(this.startingPosition.x, this.startingPosition.y);
 		this.speed = this.startingSpeed;
 		this.moving = false;
 		this.impactTimer = 0.0f;
@@ -66,9 +66,10 @@ public class Ball extends GameObject
 			timeLeftToMove = deltaTime;
 			
 			// Check all of the collisions.
-			Collisions.checkCollisions(this, timeLeftToMove);
+			
 			
 			move(timeLeftToMove);
+			Collisions.checkCollisions(this, timeLeftToMove);
 			// Accelerate the ball gradually over time, up to a certain threshold
 			if (speed < Settings.BALL_MAX_SPEED) {
 				speed += Settings.BALL_ACCELERATION * deltaTime;
@@ -76,7 +77,6 @@ public class Ball extends GameObject
 			else if (speed > Settings.BALL_MAX_SPEED) {
 				speed = Settings.BALL_MAX_SPEED;
 			}
-			
 		}
 	}
 	
