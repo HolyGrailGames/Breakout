@@ -81,14 +81,14 @@ public class GameManager {
 	public static void loseLife() {
 		// Don't reset blocks, just paddle and ball
 		if (scoreboard.getLives() > 0) {
-			SoundManager.LOSE_LIFE.play();
+			SoundManager.LOSE_LIFE.play(0.3f);
 			scoreboard.decrementLives();
 			ballStuckToPaddle = true;
 			reset();
 		}
 		else {
 			SoundManager.SONG.stop();
-			SoundManager.GAME_OVER.play();
+			SoundManager.GAME_OVER.play(0.3f);
 			gameState = GameState.GAME_OVER;
 		}
 	}
@@ -135,7 +135,7 @@ public class GameManager {
 	}
 	
 	private static void setupLevelOne() {
-		SoundManager.BREAKOUT.play();
+		SoundManager.BREAKOUT.play(0.3f);
 		long soundId = SoundManager.SONG.play();
 		SoundManager.SONG.setLooping(soundId, true);
 		SoundManager.SONG.setVolume(soundId, 0.15f);
