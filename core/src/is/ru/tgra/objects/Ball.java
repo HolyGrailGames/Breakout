@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 
+import is.ru.tgra.Breakout;
 import is.ru.tgra.graphics.GraphicsEnvironment;
 import is.ru.tgra.shapes.CircleGraphic;
 import is.ru.tgra.utils.Point2D;
