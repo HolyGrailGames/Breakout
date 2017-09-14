@@ -10,5 +10,3 @@ Tölvugrafík Breakout v1.0
 -	Level 1 (8 rows 10 columns of blocks) 
 - 	Level 2 (Leonardo TMNT)
 - 	Level 3 (Red Pacman Ghost)
-
-# Known bugs
