@@ -3,6 +3,7 @@ package is.ru.tgra;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import is.ru.tgra.managers.GameManager;
+import is.ru.tgra.managers.SoundManager;
 import is.ru.tgra.utils.Settings;
 
 public class Breakout extends ApplicationAdapter {

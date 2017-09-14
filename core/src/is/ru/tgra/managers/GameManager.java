@@ -26,6 +26,7 @@ public class GameManager {
 	public static float mouseY;
 	
 	public static boolean ballStuckToPaddle = true;
+	public static boolean drawpHits = false;
 	public static int levelIndex;
 	public static int lastLevelIndex;
 	public static int worldIndex;
@@ -49,8 +50,8 @@ public class GameManager {
 		CircleGraphic.create();
 		LineGraphic.create();
 		
-		paddle = new Paddle(new Point2D(Settings.windowWidth/2 - 125.0f, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED, Settings.PADDLE_SPEED);
-		ball = new Ball(new Point2D(Settings.windowWidth/2, 54.0f), Settings.BALL_RADIUS, Color.TEAL, Settings.BALL_SPEED);
+		paddle = new Paddle(new Point2D((Settings.windowWidth-Settings.SCOREBOARD_THICKNESS)/2, 32.0f), new Vector2D(90.0f, 24.0f), Settings.ORANGE_RED, Settings.PADDLE_SPEED);
+		ball = new Ball(new Point2D((Settings.windowWidth-Settings.SCOREBOARD_THICKNESS)/2, 54.0f), Settings.BALL_RADIUS, Color.TEAL, Settings.BALL_SPEED);
 		
 		// Bottom left
 		bounds[0] = new Point2D(Settings.WALL_THICKNESS, 0);
@@ -80,11 +81,14 @@ public class GameManager {
 	public static void loseLife() {
 		// Don't reset blocks, just paddle and ball
 		if (scoreboard.getLives() > 0) {
+			SoundManager.LOSE_LIFE.play();
 			scoreboard.decrementLives();
 			ballStuckToPaddle = true;
 			reset();
 		}
 		else {
+			SoundManager.SONG.stop();
+			SoundManager.GAME_OVER.play();
 			gameState = GameState.GAME_OVER;
 		}
 	}
@@ -131,6 +135,10 @@ public class GameManager {
 	}
 	
 	private static void setupLevelOne() {
+		SoundManager.BREAKOUT.play();
+		long soundId = SoundManager.SONG.play();
+		SoundManager.SONG.setLooping(soundId, true);
+		SoundManager.SONG.setVolume(soundId, 0.15f);
 		walls = LevelCreator.getLevelOneWalls();
 		blocks = LevelCreator.getLevelOneBlocks();
 	}
@@ -156,6 +164,22 @@ public class GameManager {
 						ballStuckToPaddle = false;
 						ball.setMoving(true);
 					}
+				}
+				
+				// Toggle drawing the pHits.
+				if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+					drawpHits = !drawpHits;
+					System.out.println("toggling");
+				}
+				
+				// Clear the list of pHits.
+				if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
+					GameManager.pHits.clear();
+				}
+				
+				// Toggle drawing the colliding points on the ball.
+				if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+					ball.toggleDrawPoints();
 				}
 				
 				if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -203,9 +227,11 @@ public class GameManager {
 		paddle.update(deltaTime);
 		// If it's the start of the level we make the ball follow the paddle.
 		if (ballStuckToPaddle) {
-			ball.translate(paddle.getPosition().x - ball.getPosition().x, 0);
+			ball.translate(paddle.getPosition().x - ball.getPosition().x, /*ball.getStartingPosition().y - ball.getPosition().y*/0);
 		}
-		ball.update(deltaTime);
+		else {
+			ball.update(deltaTime);
+		}
 		for (Block block : blocks) {
 			block.update(deltaTime);	
 		}
@@ -239,16 +265,17 @@ public class GameManager {
 		
 		
 		// Draw the last pHit.
-		/*
-		for (Point2D point : pHits) {
-			GraphicsEnvironment.clearModelMatrix();
-			GraphicsEnvironment.setColor(Color.RED);
-			GraphicsEnvironment.setModelMatrixTranslation(point.x, point.y);
-			GraphicsEnvironment.setModelMatrixScale(2, 2);
-			GraphicsEnvironment.setShaderMatrix();
-			CircleGraphic.drawSolidCircle();
+		
+		if (drawpHits) {
+			for (Point2D point : pHits) {
+				GraphicsEnvironment.clearModelMatrix();
+				GraphicsEnvironment.setColor(Color.RED);
+				GraphicsEnvironment.setModelMatrixTranslation(point.x, point.y);
+				GraphicsEnvironment.setModelMatrixScale(2, 2);
+				GraphicsEnvironment.setShaderMatrix();
+				CircleGraphic.drawSolidCircle();
+			}
 		}
-		*/
 		
 		scoreboard.draw();
 	}

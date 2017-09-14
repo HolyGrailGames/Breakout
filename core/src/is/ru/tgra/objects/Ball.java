@@ -20,6 +20,8 @@ public class Ball extends GameObject
 	private float speed;
 	private float radius;
 	
+	private boolean drawPoints = false;
+	
 	private Point2D pHit = new Point2D();
 	
 	private float impactTimer = 0.0f;
@@ -67,9 +69,8 @@ public class Ball extends GameObject
 			
 			// Check all of the collisions.
 			
-			
-			move(timeLeftToMove);
 			Collisions.checkCollisions(this, timeLeftToMove);
+			move(timeLeftToMove);
 			// Accelerate the ball gradually over time, up to a certain threshold
 			if (speed < Settings.BALL_MAX_SPEED) {
 				speed += Settings.BALL_ACCELERATION * deltaTime;
@@ -109,16 +110,16 @@ public class Ball extends GameObject
 		CircleGraphic.drawSolidCircle();
 			
 		// Draw points on ball for debug purposes.
-		/*
-		for (Point2D point : points) {
-			GraphicsEnvironment.clearModelMatrix();
-			GraphicsEnvironment.setModelMatrixTranslation(point.x, point.y);
-			GraphicsEnvironment.setColor(Color.RED);
-			GraphicsEnvironment.setModelMatrixScale(2, 2);
-			GraphicsEnvironment.setShaderMatrix();
-			CircleGraphic.drawSolidCircle();
+		if (drawPoints) {
+			for (Point2D point : points) {
+				GraphicsEnvironment.clearModelMatrix();
+				GraphicsEnvironment.setModelMatrixTranslation(point.x, point.y);
+				GraphicsEnvironment.setColor(Color.RED);
+				GraphicsEnvironment.setModelMatrixScale(2, 2);
+				GraphicsEnvironment.setShaderMatrix();
+				CircleGraphic.drawSolidCircle();
+			}
 		}
-		*/
 	}
 	
 	@Override
@@ -127,6 +128,10 @@ public class Ball extends GameObject
 		for (Point2D point : points) {
 			point.translate(dx, dy);
 		}
+	}
+	
+	public void toggleDrawPoints() {
+		drawPoints = !drawPoints;
 	}
 	
 	public void setTimeLeftToMove(float time) {
@@ -163,6 +168,10 @@ public class Ball extends GameObject
 	
 	public Point2D getPHit() {
 		return this.pHit;
+	}
+	
+	public Point2D getStartingPosition() {
+		return this.startingPosition;
 	}
 	
 	private void initializePoints() {

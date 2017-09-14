@@ -26,6 +26,7 @@ public class Collisions {
 			if (tHit > 0.0f && i == 3 && j == 0) {
 				// We've hit the ground and we lose a life.
 				GameManager.loseLife();
+				ball.setTimeLeftToMove(0);
 				
 				// Recursively check if collision in rest of frame time.
 				checkCollisions(ball, timeRemaining - tHit);
@@ -43,6 +44,7 @@ public class Collisions {
 				if (ratio < 0.35 || ratio > 0.65) {
 					ball.setDirection(new Vector2D(ratio*2-1, 1));
 				}
+				SoundManager.BOING.play();
 				
 				// Recursively check if collision in rest of frame time.
 				checkCollisions(ball, timeRemaining - tHit);
@@ -104,14 +106,14 @@ public class Collisions {
 		}
 		
 		if (collision) {
-			GameManager.pHits.clear();
+			//GameManager.pHits.clear();
 			GameManager.pHits.add(pHit);
 			Vector2D a = c;
 			float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
 			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
 			Vector2D newDirection = new Vector2D(x,y);
 			
-			ball.move(tHit*0.999f);
+			ball.move(tHit*0.9f);
 			ball.setDirection(newDirection.normalize());
 			ball.subtractFromTimeLeftToMove(tHit);
 			/*
