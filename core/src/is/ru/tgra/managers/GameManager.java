@@ -38,6 +38,8 @@ public class GameManager {
 	public static GameOver gameOver;
 	public static Point2D[] bounds = new Point2D[4];
 	
+	public static List<Point2D> pHits = new ArrayList<Point2D>();
+	
 	public static GameState gameState = GameState.PLAYING;
 	
 	public static void create() {
@@ -195,11 +197,6 @@ public class GameManager {
 		
 		processInput();
 		
-		ball.setTimeLeftToMove(deltaTime);
-		
-		// Check all of the collisions.
-		Collisions.checkCollisions(deltaTime);
-		
 		// Update the position of all of the game objects in the game.
 		paddle.update(deltaTime);
 		// If it's the start of the level we make the ball follow the paddle.
@@ -229,6 +226,19 @@ public class GameManager {
 		for (Block block : blocks) {
 			block.draw();	
 		}
+		
+		
+		// Draw the last pHit.
+		/*
+		for (Point2D point : pHits) {
+			GraphicsEnvironment.clearModelMatrix();
+			GraphicsEnvironment.setColor(Color.RED);
+			GraphicsEnvironment.setModelMatrixTranslation(point.x, point.y);
+			GraphicsEnvironment.setModelMatrixScale(2, 2);
+			GraphicsEnvironment.setShaderMatrix();
+			CircleGraphic.drawSolidCircle();
+		}
+		*/
 		
 		scoreboard.draw();
 	}

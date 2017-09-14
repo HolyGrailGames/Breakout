@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import is.ru.tgra.Breakout;
 import is.ru.tgra.graphics.GraphicsEnvironment;
+import is.ru.tgra.managers.Collisions;
 import is.ru.tgra.shapes.CircleGraphic;
 import is.ru.tgra.utils.Point2D;
 import is.ru.tgra.utils.Settings;
@@ -62,6 +63,11 @@ public class Ball extends GameObject
 		}
 		
 		if (moving) {
+			timeLeftToMove = deltaTime;
+			
+			// Check all of the collisions.
+			Collisions.checkCollisions(this, timeLeftToMove);
+			
 			move(timeLeftToMove);
 			/*if (speed < Settings.BALL_MAX_SPEED) {
 				speed += Settings.BALL_ACCELERATION * deltaTime;
@@ -73,10 +79,14 @@ public class Ball extends GameObject
 		}
 	}
 	
-	private void move(float time) {
+	public void move(float time) {
 		float dx = direction.x * speed * time;
 		float dy = direction.y * speed * time;
 		translate(dx, dy);
+	}
+	
+	public void subtractFromTimeLeftToMove(float time) {
+		this.timeLeftToMove -= time;
 	}
 
 	@Override
@@ -85,7 +95,7 @@ public class Ball extends GameObject
 		GraphicsEnvironment.clearModelMatrix();
 		
 		GraphicsEnvironment.setModelMatrixTranslation(position.x, position.y);
-		/*
+
 		if (impactTimer > 0) {
 			GraphicsEnvironment.setColor(Color.GREEN);
 			GraphicsEnvironment.setModelMatrixScale(scale.x*2f, scale.y*2f);
@@ -94,22 +104,22 @@ public class Ball extends GameObject
 			GraphicsEnvironment.setColor(color);
 			GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);			
 		}
-		*/
-		GraphicsEnvironment.setColor(color);
-		GraphicsEnvironment.setModelMatrixScale(scale.x, scale.y);
 		
 		GraphicsEnvironment.setShaderMatrix();
 		CircleGraphic.drawSolidCircle();
+		
+		// Draw points on ball for debug purposes.
 		/*
 		for (Point2D point : points) {
 			GraphicsEnvironment.clearModelMatrix();
 			GraphicsEnvironment.setModelMatrixTranslation(point.x, point.y);
-			GraphicsEnvironment.setColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1.0f));
-			GraphicsEnvironment.setModelMatrixScale(5, 5);
+			GraphicsEnvironment.setColor(Color.RED);
+			GraphicsEnvironment.setModelMatrixScale(2, 2);
 			GraphicsEnvironment.setShaderMatrix();
 			CircleGraphic.drawSolidCircle();
 		}
 		*/
+		
 	}
 	
 	@Override
@@ -122,56 +132,6 @@ public class Ball extends GameObject
 	
 	public void setTimeLeftToMove(float time) {
 		this.timeLeftToMove = time;
-	}
-	
-	public boolean checkCollisionWithLine(Point2D B, Point2D B2, float deltaTime) {
-		
-		Point2D[] points = getPointsOnBall();
-		
-		Vector2D v = new Vector2D(B2.x-B.x, B2.y-B.y);
-		Vector2D n = new Vector2D(v.y, -v.x);
-				
-		Vector2D c = getVelocity();
-		
-		float tHit = Float.MAX_VALUE;
-		
-		boolean collision = false;
-		
-		for (int i = 0; i < points.length; i++) {
-			Point2D A = points[i];
-			
-			float newtHit = Utils.tHit(A, B, n, c);
-			if (newtHit > 0 && newtHit < deltaTime) {
-				Point2D newpHit = new Point2D(A.x + newtHit * c.x, A.y + newtHit * c.y);
-				if (newpHit.isBetween(B, B2)) {
-					if (newtHit < tHit) {
-						tHit = newtHit;
-						pHit = newpHit;
-						collision = true;
-					}
-				}
-			}
-		}
-		
-		if (collision) {
-			Vector2D a = c;
-			float x = a.x - (2*(a.dot(n) / n.dot(n)) * n.x);
-			float y = a.y - (2*(a.dot(n) / n.dot(n)) * n.y);
-			Vector2D newDirection = new Vector2D(x,y);
-			setDirection(newDirection.normalize());
-			move(tHit*0.999f);
-			timeLeftToMove -= tHit;
-			/*
-			System.out.println("------------------------------------------");
-			System.out.println("Thit:      " + tHit);
-			System.out.println("DeltaTime: " + deltaTime);
-			System.out.println("phit:      " + pHit);
-			System.out.println("new direction: " + newDirection.normalize());
-			*/
-			return true;
-		}
-		
-		return false;
 	}
 	
 	public void impact() {
