@@ -24,11 +24,27 @@ public class Point2D {
 		return (float)Math.sqrt(Math.pow(p2.x - x, 2) + Math.pow(p2.y - y, 2));
 	}
 	
-	public boolean isBetween(Point2D a, Point2D b) {
+	public boolean isBetween(Point2D p1, Point2D p2) {
+        if (Math.abs(p1.x - p2.x) < Math.abs(p1.y - p2.y))
+        {
+            if (p1.y < p2.y)
+            {
+                return (p1.y < y && y < p2.y);
+            }
+
+            return (p2.y < y && y < p1.y);
+        }
+
+        if (p1.x < p2.x)
+        {
+            return (p1.x < x && x < p2.x);
+        }
+
+        return (p2.x < x && x < p1.x);
 		// epsilon is used to give us a margin of error when comparing floats.
 		// TODO: Possibly we could use a percentage of the distance every time as our epsilon instead
 		// of a hard-coded epsilon.
-		return Math.abs((this.distance(a) + this.distance(b)) - a.distance(b)) < epsilon;
+		//return Math.abs((this.distance(a) + this.distance(b)) - a.distance(b)) < epsilon;
 	}
 	
 	public void translate(float dx, float dy) {

@@ -30,7 +30,7 @@ public class Settings {
 	public static final float BLOCK_HEIGHT = 24.0f;
 	public static final float BLOCK_SPACING = 6.0f;
 	
-	public static final float BALL_SPEED = 500.0f;
+	public static final float BALL_SPEED = 100.0f;
 	public static final float BALL_RADIUS = 10.0f;
 	public static final float BALL_ACCELERATION = 5.0f;
 	public static final float BALL_MAX_SPEED = 1500.0f;
